@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Döviz TL Pro Ultra V5 Final</title>
+<title>Döviz TL Pro Ultra V6 Final</title>
 <style>
 :root{
   --bg:#020617;--card:#111827;--text:#f8fafc;--muted:#94a3b8;
@@ -18,57 +18,60 @@ body{
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif
 }
 .app{max-width:1200px;margin:auto;padding:18px}
-.header{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-h1{font-size:32px;margin:0}
+.header{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:flex-start}
+h1{font-size:30px;margin:0;line-height:1.15}
 p{margin:8px 0;color:var(--muted)}
 .live{
   color:var(--green);border:1px solid var(--green);border-radius:999px;
-  padding:10px 16px;font-weight:900;animation:pulse 1.2s infinite
+  padding:10px 16px;font-weight:900;animation:pulse 1.2s infinite;white-space:nowrap
 }
 @keyframes pulse{50%{opacity:.55}}
 .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:16px}
 .card{
   background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.025));
   border:1px solid var(--line);border-radius:24px;padding:18px;
-  box-shadow:0 20px 45px rgba(0,0,0,.35)
+  box-shadow:0 20px 45px rgba(0,0,0,.35);overflow:hidden
 }
 .full{grid-column:1/-1}.big{grid-column:span 2}
 .card h2{margin:0 0 12px;font-size:19px}
-.price{font-size:34px;font-weight:950}
+.price{font-size:34px;font-weight:950;letter-spacing:-.7px}
 .buy{color:var(--green)}.sell{color:var(--red)}.gold{color:var(--gold)}.blue{color:var(--blue)}
 .sub{color:var(--muted);font-size:13px}
 table{width:100%;border-collapse:collapse}
 th,td{padding:13px;border-bottom:1px solid var(--line);text-align:left}
 th{color:var(--muted);font-size:12px}
 .flash{animation:flash .8s infinite alternate}
-@keyframes flash{from{opacity:1}to{opacity:.45}}
+@keyframes flash{from{opacity:1}to{opacity:.50}}
 .tape{
-  margin:18px 0;padding:12px;border:1px solid var(--line);border-radius:18px;
-  overflow:hidden;white-space:nowrap;background:#020617
+  margin:18px 0 0;padding:12px;border:1px solid var(--line);border-radius:18px;
+  overflow:hidden;white-space:nowrap;background:#020617;min-height:46px
 }
-.tape span{display:inline-block;animation:move 28s linear infinite;font-weight:800}
+.tape span{display:inline-block;animation:move 24s linear infinite;font-weight:800}
 @keyframes move{from{transform:translateX(100%)}to{transform:translateX(-100%)}}
 .widgetBox{height:430px;border-radius:20px;overflow:hidden}
 .smallWidget{height:230px;border-radius:20px;overflow:hidden}
+.note{font-size:12px;color:var(--muted);margin-top:8px}
 @media(max-width:850px){
   .grid{grid-template-columns:1fr}.big{grid-column:span 1}
-  h1{font-size:28px}.price{font-size:30px}
+  h1{font-size:27px}.price{font-size:30px}
+  .app{padding:14px}
 }
 </style>
 </head>
+
 <body>
 <div class="app">
 
 <div class="header">
   <div>
-    <h1>💱 Döviz TL Pro Ultra V5 Final</h1>
-    <p>Canlı terminal görünümü • USD/EUR referans • gram altın • gram gümüş • banka spread</p>
+    <h1>💱 Döviz TL Pro Ultra V6 Final</h1>
+    <p>USD/EUR • GAU/TRY gram altın • XAGg/TRY gram gümüş • banka spread • canlı terminal</p>
   </div>
   <div class="live">● LIVE TERMINAL</div>
 </div>
 
 <div class="tape">
-  <span id="tapeText">USDTRY • EURTRY • GBPTRY • GRAM ALTIN • GRAM GÜMÜŞ • ÇEYREK ALTIN • CANLI TERMİNAL</span>
+  <span id="tapeText">USDTRY • EURTRY • GBPTRY • GAU/TRY GRAM ALTIN • XAGg/TRY GRAM GÜMÜŞ • ÇEYREK ALTIN • CANLI TERMİNAL</span>
 </div>
 
 <div class="grid">
@@ -88,7 +91,7 @@ th{color:var(--muted);font-size:12px}
   <div class="card">
     <h2>🥇 Gram Altın</h2>
     <div id="gram" class="price gold flash">--</div>
-    <div class="sub">Piyasa referanslı terminal fiyatı</div>
+    <div class="sub">GAU/TRY referanslı terminal fiyatı</div>
   </div>
 
   <div class="card">
@@ -107,8 +110,8 @@ th{color:var(--muted);font-size:12px}
           {"proName":"FX_IDC:USDTRY","title":"USD/TRY"},
           {"proName":"FX_IDC:EURTRY","title":"EUR/TRY"},
           {"proName":"FX_IDC:GBPTRY","title":"GBP/TRY"},
-          {"proName":"OANDA:XAUUSD","title":"Ons Altın"},
-          {"proName":"OANDA:XAGUSD","title":"Ons Gümüş"}
+          {"proName":"FX_IDC:GAUTRY","title":"GAU/TRY"},
+          {"proName":"FX_IDC:XAGGTRY","title":"XAGg/TRY"}
         ],
         "showSymbolLogo": true,
         "colorTheme": "dark",
@@ -118,6 +121,7 @@ th{color:var(--muted);font-size:12px}
       }
       </script>
     </div>
+    <div class="note">TradingView sembolleri bazı cihazlarda farklı veri sağlayıcıya göre değişebilir.</div>
   </div>
 
   <div class="card big">
@@ -142,13 +146,13 @@ th{color:var(--muted);font-size:12px}
   </div>
 
   <div class="card big">
-    <h2>🥇 Ons Altın Canlı Grafik</h2>
+    <h2>🥇 Gram Altın Canlı Grafik</h2>
     <div class="smallWidget">
       <div class="tradingview-widget-container">
         <div class="tradingview-widget-container__widget"></div>
         <script async src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js">
         {
-          "symbol":"OANDA:XAUUSD",
+          "symbol":"FX_IDC:GAUTRY",
           "width":"100%",
           "height":"100%",
           "locale":"tr",
@@ -194,7 +198,7 @@ let base = {
   CHF: 56.20,
   SAR: 11.99,
   JPY: 0.292,
-  GRAM: 4235,
+  GRAM: 6812.50,
   SILVER: 109.50
 };
 
@@ -230,8 +234,8 @@ function tick(){
   base.SAR = rnd(base.SAR,0.0012);
   base.JPY = rnd(base.JPY,0.0012);
 
-  base.GRAM = rnd(base.GRAM,0.003);
-  base.SILVER = rnd(base.SILVER,0.004);
+  base.GRAM = rnd(base.GRAM,0.0025);
+  base.SILVER = rnd(base.SILVER,0.0035);
 
   usd.textContent = fmt(base.USD);
   eur.textContent = fmt(base.EUR);
@@ -245,8 +249,8 @@ function tick(){
     ["CHF",base.CHF],
     ["SAR",base.SAR],
     ["JPY",base.JPY],
-    ["Gram Altın",base.GRAM],
-    ["Gram Gümüş",base.SILVER],
+    ["GAU/TRY Gram Altın",base.GRAM],
+    ["XAGg/TRY Gram Gümüş",base.SILVER],
     ["Çeyrek Altın",base.GRAM*1.635],
     ["Yarım Altın",base.GRAM*3.27],
     ["Tam Altın",base.GRAM*6.54]
@@ -285,7 +289,7 @@ function tick(){
   }).join("");
 
   tapeText.textContent =
-    `USDTRY ${fmt(base.USD)}  •  EURTRY ${fmt(base.EUR)}  •  GBPTRY ${fmt(base.GBP)}  •  GRAM ALTIN ${fmt(base.GRAM)}  •  GRAM GÜMÜŞ ${fmt(base.SILVER)}  •  ÇEYREK ALTIN ${fmt(base.GRAM*1.635)}  •  CANLI TERMİNAL`;
+    `USDTRY ${fmt(base.USD)}  •  EURTRY ${fmt(base.EUR)}  •  GBPTRY ${fmt(base.GBP)}  •  GAU/TRY GRAM ALTIN ${fmt(base.GRAM)}  •  XAGg/TRY GRAM GÜMÜŞ ${fmt(base.SILVER)}  •  ÇEYREK ALTIN ${fmt(base.GRAM*1.635)}  •  CANLI TERMİNAL`;
 }
 
 getReferenceRates().then(tick);
