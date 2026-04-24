@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Döviz TL Pro Ultra V8 Portfolio P/L</title>
+<title>Döviz TL Pro Ultra V9 Smart Wallet</title>
 <style>
 :root{
   --bg:#020617;--card:#111827;--text:#f8fafc;--muted:#94a3b8;
@@ -12,10 +12,8 @@
 }
 *{box-sizing:border-box}
 body{
-  margin:0;
-  background:radial-gradient(circle at top,#1e293b,#020617 58%);
-  color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif
+  margin:0;background:radial-gradient(circle at top,#1e293b,#020617 58%);
+  color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif
 }
 .app{max-width:1250px;margin:auto;padding:18px}
 .header{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
@@ -51,8 +49,8 @@ th{color:var(--muted);font-size:12px}
 }
 .tape span{display:inline-block;animation:move 26s linear infinite;font-weight:800}
 @keyframes move{from{transform:translateX(100%)}to{transform:translateX(-100%)}}
-input{
-  width:100%;padding:10px;border-radius:12px;border:1px solid var(--line);
+input,select{
+  width:100%;padding:12px;border-radius:14px;border:1px solid var(--line);
   background:#020617;color:white;font-size:15px
 }
 button{
@@ -60,55 +58,35 @@ button{
   background:linear-gradient(135deg,#0ea5e9,#2563eb);
   color:white;font-weight:900;font-size:15px
 }
-.controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-.portfolio-grid{
+button.danger{background:linear-gradient(135deg,#ef4444,#991b1b)}
+button.gray{background:#020617}
+.form-grid{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+  grid-template-columns:2fr 1fr 1fr auto;
   gap:12px;
+  align-items:end;
 }
-.asset-box{
-  background:#020617;
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:14px;
-}
-.asset-box label{
-  display:block;
-  font-size:13px;
-  color:var(--muted);
-  margin-bottom:8px;
-}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.filters button{padding:10px 13px;background:#020617}
+.filters button.active{background:linear-gradient(135deg,#22c55e,#15803d)}
 .totalBox{
-  border-radius:22px;
-  padding:18px;
-  margin-top:14px;
+  border-radius:22px;padding:18px;margin-top:14px;
   border:1px solid rgba(34,197,94,.35);
-  background:linear-gradient(135deg,rgba(34,197,94,.15),rgba(56,189,248,.12));
+  background:linear-gradient(135deg,rgba(34,197,94,.15),rgba(56,189,248,.12))
 }
 .lossBox{
   border-color:rgba(239,68,68,.45);
-  background:linear-gradient(135deg,rgba(239,68,68,.18),rgba(127,29,29,.15));
+  background:linear-gradient(135deg,rgba(239,68,68,.18),rgba(127,29,29,.15))
 }
-.pl-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-  margin-top:14px;
-}
-.pl-card{
-  background:#020617;
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:14px;
-}
-.widgetBox{height:430px;border-radius:20px;overflow:hidden}
-.smallWidget{height:230px;border-radius:20px;overflow:hidden}
+.pl-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px}
+.pl-card{background:#020617;border:1px solid var(--line);border-radius:18px;padding:14px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
 @media(max-width:900px){
   .grid{grid-template-columns:1fr}.big{grid-column:span 1}
-  .portfolio-grid,.pl-grid{grid-template-columns:1fr 1fr}
+  .form-grid,.pl-grid{grid-template-columns:1fr}
   h1{font-size:27px}.price{font-size:28px}
   .app{padding:14px}
-  th,td{font-size:12px;padding:10px}
+  th,td{font-size:12px;padding:9px}
 }
 </style>
 </head>
@@ -118,98 +96,49 @@ button{
 
 <div class="header">
   <div>
-    <h1>💱 Döviz TL Pro Ultra V8 Portfolio P/L</h1>
-    <p>Canlı terminal • portföy cüzdan • alım maliyeti • kâr / zarar ekranı</p>
+    <h1>💱 Döviz TL Pro Ultra V9 Smart Wallet</h1>
+    <p>Tek girişli portföy • filtre • kâr/zarar • canlı terminal ekranı</p>
   </div>
   <div class="live">● LIVE TERMINAL</div>
 </div>
 
 <div class="tape">
-  <span id="tapeText">USDTRY • EURTRY • GRAM ALTIN • GRAM GÜMÜŞ • ATA LİRA • CUMHURİYET • PLATİN • BAKIR • PORTFÖY KÂR/ZARAR</span>
+  <span id="tapeText">USDTRY • EURTRY • GRAM ALTIN • GRAM GÜMÜŞ • ATA LİRA • CUMHURİYET • PLATİN • BAKIR • SMART WALLET</span>
 </div>
 
 <div class="grid">
 
-  <div class="card">
-    <h2>🇺🇸 USD / TRY</h2>
-    <div id="usd" class="price blue flash">--</div>
-    <div class="sub">Canlı referans + terminal efekti</div>
-  </div>
-
-  <div class="card">
-    <h2>🇪🇺 EUR / TRY</h2>
-    <div id="eur" class="price blue flash">--</div>
-    <div class="sub">Canlı referans + terminal efekti</div>
-  </div>
-
-  <div class="card">
-    <h2>🥇 Gram Altın</h2>
-    <div id="gram" class="price gold flash">--</div>
-    <div class="sub">GAU/TRY referanslı terminal fiyatı</div>
-  </div>
-
-  <div class="card">
-    <h2>⚪ Gram Gümüş</h2>
-    <div id="silver" class="price flash">--</div>
-    <div class="sub">XAGg/TRY referanslı terminal fiyatı</div>
-  </div>
-
-  <div class="card">
-    <h2>🪙 Ata Lira</h2>
-    <div id="ata" class="price gold flash">--</div>
-    <div class="sub">Yaklaşık piyasa fiyatı</div>
-  </div>
-
-  <div class="card">
-    <h2>🏛️ Cumhuriyet Altını</h2>
-    <div id="cumhuriyet" class="price gold flash">--</div>
-    <div class="sub">Yaklaşık piyasa fiyatı</div>
-  </div>
-
-  <div class="card">
-    <h2>⚙️ Platin Gram</h2>
-    <div id="platin" class="price flash">--</div>
-    <div class="sub">Terminal referanslı yaklaşık</div>
-  </div>
-
-  <div class="card">
-    <h2>🔶 Bakır KG</h2>
-    <div id="bakir" class="price flash">--</div>
-    <div class="sub">Terminal referanslı yaklaşık</div>
-  </div>
+  <div class="card"><h2>🇺🇸 USD / TRY</h2><div id="usd" class="price blue flash">--</div><div class="sub">Canlı referans + terminal efekti</div></div>
+  <div class="card"><h2>🇪🇺 EUR / TRY</h2><div id="eur" class="price blue flash">--</div><div class="sub">Canlı referans + terminal efekti</div></div>
+  <div class="card"><h2>🥇 Gram Altın</h2><div id="gram" class="price gold flash">--</div><div class="sub">GAU/TRY referanslı terminal fiyatı</div></div>
+  <div class="card"><h2>⚪ Gram Gümüş</h2><div id="silver" class="price flash">--</div><div class="sub">XAGg/TRY referanslı terminal fiyatı</div></div>
 
   <div class="card full">
-    <h2>👛 Portföy / Cüzdan + Alım Maliyeti</h2>
+    <h2>👛 Akıllı Portföy Girişi</h2>
 
-    <div class="portfolio-grid">
-      <div class="asset-box"><label>USD miktarı</label><input id="pUSD" type="number" step="0.01" value="0"></div>
-      <div class="asset-box"><label>USD alım maliyeti / adet</label><input id="cUSD" type="number" step="0.01" value="0"></div>
-
-      <div class="asset-box"><label>EUR miktarı</label><input id="pEUR" type="number" step="0.01" value="0"></div>
-      <div class="asset-box"><label>EUR alım maliyeti / adet</label><input id="cEUR" type="number" step="0.01" value="0"></div>
-
-      <div class="asset-box"><label>Gram Altın miktarı</label><input id="pGRAM" type="number" step="0.01" value="0"></div>
-      <div class="asset-box"><label>Gram Altın maliyeti</label><input id="cGRAM" type="number" step="0.01" value="0"></div>
-
-      <div class="asset-box"><label>Gram Gümüş miktarı</label><input id="pSILVER" type="number" step="0.01" value="0"></div>
-      <div class="asset-box"><label>Gram Gümüş maliyeti</label><input id="cSILVER" type="number" step="0.01" value="0"></div>
-
-      <div class="asset-box"><label>Ata Lira adet</label><input id="pATA" type="number" step="1" value="0"></div>
-      <div class="asset-box"><label>Ata Lira maliyeti / adet</label><input id="cATA" type="number" step="0.01" value="0"></div>
-
-      <div class="asset-box"><label>Cumhuriyet Altını adet</label><input id="pCUM" type="number" step="1" value="0"></div>
-      <div class="asset-box"><label>Cumhuriyet maliyeti / adet</label><input id="cCUM" type="number" step="0.01" value="0"></div>
-
-      <div class="asset-box"><label>Platin gram</label><input id="pPLATIN" type="number" step="0.01" value="0"></div>
-      <div class="asset-box"><label>Platin maliyeti / gram</label><input id="cPLATIN" type="number" step="0.01" value="0"></div>
-
-      <div class="asset-box"><label>Bakır kg</label><input id="pBAKIR" type="number" step="0.01" value="0"></div>
-      <div class="asset-box"><label>Bakır maliyeti / kg</label><input id="cBAKIR" type="number" step="0.01" value="0"></div>
+    <div class="form-grid">
+      <div>
+        <div class="sub">Varlık seç</div>
+        <select id="assetSelect"></select>
+      </div>
+      <div>
+        <div class="sub">Miktar / adet</div>
+        <input id="assetQty" type="number" step="0.01" placeholder="Örn: 10">
+      </div>
+      <div>
+        <div class="sub">Alım maliyeti / birim</div>
+        <input id="assetCost" type="number" step="0.01" placeholder="Örn: 44.50">
+      </div>
+      <button onclick="addAsset()">➕ Ekle</button>
     </div>
 
-    <div class="controls">
-      <button onclick="savePortfolio()">💾 Kaydet</button>
-      <button onclick="resetPortfolio()">🧹 Sıfırla</button>
+    <div class="filters">
+      <button class="active" onclick="setFilter('all',this)">Tümü</button>
+      <button onclick="setFilter('currency',this)">Döviz</button>
+      <button onclick="setFilter('gold',this)">Altın</button>
+      <button onclick="setFilter('metal',this)">Metal</button>
+      <button onclick="setFilter('other',this)">Diğer</button>
+      <button class="danger" onclick="clearWallet()">Cüzdanı Temizle</button>
     </div>
 
     <div id="totalBox" class="totalBox">
@@ -218,49 +147,30 @@ button{
     </div>
 
     <div class="pl-grid">
-      <div class="pl-card">
-        <div class="sub">Toplam Maliyet</div>
-        <div id="totalCost" class="price blue">--</div>
-      </div>
-      <div class="pl-card">
-        <div class="sub">Toplam Kâr / Zarar</div>
-        <div id="totalPL" class="price">--</div>
-      </div>
-      <div class="pl-card">
-        <div class="sub">Getiri Oranı</div>
-        <div id="totalPercent" class="price">--</div>
-      </div>
-      <div class="pl-card">
-        <div class="sub">Durum</div>
-        <div id="plStatus" class="price">--</div>
-      </div>
+      <div class="pl-card"><div class="sub">Toplam Maliyet</div><div id="totalCost" class="price blue">--</div></div>
+      <div class="pl-card"><div class="sub">Toplam Kâr / Zarar</div><div id="totalPL" class="price">--</div></div>
+      <div class="pl-card"><div class="sub">Getiri Oranı</div><div id="totalPercent" class="price">--</div></div>
+      <div class="pl-card"><div class="sub">Durum</div><div id="plStatus" class="price">--</div></div>
     </div>
   </div>
 
   <div class="card full">
-    <h2>📊 Portföy Kâr / Zarar Detayı</h2>
+    <h2>📊 Portföy Listesi</h2>
     <table>
       <thead>
         <tr>
-          <th>Varlık</th>
-          <th>Miktar</th>
-          <th>Güncel Fiyat</th>
-          <th>Maliyet</th>
-          <th>Değer</th>
-          <th>K/Z</th>
-          <th>%</th>
+          <th>Varlık</th><th>Tür</th><th>Miktar</th><th>Güncel</th>
+          <th>Maliyet</th><th>Değer</th><th>K/Z</th><th>%</th><th>İşlem</th>
         </tr>
       </thead>
-      <tbody id="portfolioTable"></tbody>
+      <tbody id="walletTable"></tbody>
     </table>
   </div>
 
   <div class="card full">
     <h2>💱 Terminal Kur ve Maden Tablosu</h2>
     <table>
-      <thead>
-        <tr><th>Birim</th><th>Alış</th><th>Satış</th><th>Durum</th></tr>
-      </thead>
+      <thead><tr><th>Birim</th><th>Alış</th><th>Satış</th><th>Durum</th></tr></thead>
       <tbody id="marketTable"></tbody>
     </table>
   </div>
@@ -268,12 +178,9 @@ button{
   <div class="card full">
     <h2>🏦 Banka Karşılaştırma Terminali</h2>
     <table>
-      <thead>
-        <tr><th>Banka</th><th>USD Alış</th><th>USD Satış</th><th>EUR Alış</th><th>EUR Satış</th></tr>
-      </thead>
+      <thead><tr><th>Banka</th><th>USD Alış</th><th>USD Satış</th><th>EUR Alış</th><th>EUR Satış</th></tr></thead>
       <tbody id="bankTable"></tbody>
     </table>
-    <div class="sub">Banka değerleri yaklaşık makas simülasyonudur.</div>
   </div>
 
 </div>
@@ -281,28 +188,41 @@ button{
 
 <script>
 let base = {
-  USD: 44.99,
-  EUR: 52.73,
-  GBP: 60.89,
-  CHF: 56.20,
-  SAR: 11.99,
-  JPY: 0.292,
-  GRAM: 6812.50,
-  SILVER: 109.50,
-  PLATIN: 1600,
-  BAKIR: 420
+  USD:44.99, EUR:52.73, GBP:60.89, CHF:56.20, SAR:11.99, JPY:0.292,
+  GRAM:6812.50, SILVER:109.50, PLATIN:1600, BAKIR:420
 };
 
-const inputs = [
-  "pUSD","cUSD","pEUR","cEUR","pGRAM","cGRAM","pSILVER","cSILVER",
-  "pATA","cATA","pCUM","cCUM","pPLATIN","cPLATIN","pBAKIR","cBAKIR"
-];
+let wallet = [];
+let activeFilter = "all";
+
+const assetMap = {
+  USD:{name:"USD", type:"currency"},
+  EUR:{name:"EUR", type:"currency"},
+  GBP:{name:"GBP", type:"currency"},
+  CHF:{name:"CHF", type:"currency"},
+  SAR:{name:"SAR", type:"currency"},
+  JPY:{name:"JPY", type:"currency"},
+  GRAM:{name:"Gram Altın", type:"gold"},
+  SILVER:{name:"Gram Gümüş", type:"metal"},
+  ATA:{name:"Ata Lira", type:"gold"},
+  CUM:{name:"Cumhuriyet Altını", type:"gold"},
+  CEYREK:{name:"Çeyrek Altın", type:"gold"},
+  YARIM:{name:"Yarım Altın", type:"gold"},
+  TAM:{name:"Tam Altın", type:"gold"},
+  PLATIN:{name:"Platin Gram", type:"metal"},
+  BAKIR:{name:"Bakır KG", type:"metal"}
+};
+
+function initAssetSelect(){
+  assetSelect.innerHTML = Object.keys(assetMap).map(k =>
+    `<option value="${k}">${assetMap[k].name}</option>`
+  ).join("");
+}
 
 async function getReferenceRates(){
   try{
     const r = await fetch("https://open.er-api.com/v6/latest/USD",{cache:"no-store"});
     const d = await r.json();
-
     if(d && d.rates && d.rates.TRY){
       base.USD = d.rates.TRY;
       base.EUR = d.rates.TRY / d.rates.EUR;
@@ -314,159 +234,184 @@ async function getReferenceRates(){
   }catch(e){}
 }
 
-function rnd(v,p=0.0022){
-  return v * (1 + (Math.random() - .5) * p);
-}
+function rnd(v,p=0.0022){ return v * (1 + (Math.random() - .5) * p); }
 
 function fmt(v){
   return v.toLocaleString("tr-TR",{minimumFractionDigits:2,maximumFractionDigits:2}) + " TL";
 }
-
 function pct(v){
   return v.toLocaleString("tr-TR",{minimumFractionDigits:2,maximumFractionDigits:2}) + "%";
 }
-
-function n(id){
-  return Number(document.getElementById(id).value || 0);
+function qty(v){
+  return Number(v).toLocaleString("tr-TR",{maximumFractionDigits:4});
 }
 
 function calcAssets(){
-  const ata = base.GRAM * 7.216;
-  const cum = base.GRAM * 7.216;
-  const ceyrek = base.GRAM * 1.635;
-  const yarim = base.GRAM * 3.27;
-  const tam = base.GRAM * 6.54;
-  return {ata,cum,ceyrek,yarim,tam};
+  return {
+    ATA:base.GRAM*7.216,
+    CUM:base.GRAM*7.216,
+    CEYREK:base.GRAM*1.635,
+    YARIM:base.GRAM*3.27,
+    TAM:base.GRAM*6.54
+  };
 }
 
-function assetRow(name, qty, price, costEach){
-  const value = qty * price;
-  const cost = qty * costEach;
-  const pl = value - cost;
-  const percent = cost > 0 ? (pl / cost) * 100 : 0;
-  return {name, qty, price, costEach, value, cost, pl, percent};
-}
-
-function updatePortfolio(){
+function priceOf(code){
   const a = calcAssets();
+  if(base[code]) return base[code];
+  if(a[code]) return a[code];
+  return 0;
+}
 
-  const rows = [
-    assetRow("USD", n("pUSD"), base.USD, n("cUSD")),
-    assetRow("EUR", n("pEUR"), base.EUR, n("cEUR")),
-    assetRow("Gram Altın", n("pGRAM"), base.GRAM, n("cGRAM")),
-    assetRow("Gram Gümüş", n("pSILVER"), base.SILVER, n("cSILVER")),
-    assetRow("Ata Lira", n("pATA"), a.ata, n("cATA")),
-    assetRow("Cumhuriyet Altını", n("pCUM"), a.cum, n("cCUM")),
-    assetRow("Platin Gram", n("pPLATIN"), base.PLATIN, n("cPLATIN")),
-    assetRow("Bakır KG", n("pBAKIR"), base.BAKIR, n("cBAKIR"))
-  ];
+function addAsset(){
+  const code = assetSelect.value;
+  const amount = Number(assetQty.value || 0);
+  const cost = Number(assetCost.value || 0);
 
-  const totalValue = rows.reduce((s,x)=>s+x.value,0);
-  const costValue = rows.reduce((s,x)=>s+x.cost,0);
-  const plValue = totalValue - costValue;
-  const percentValue = costValue > 0 ? (plValue / costValue) * 100 : 0;
+  if(!code || amount <= 0){
+    alert("Miktar girmen gerekiyor.");
+    return;
+  }
+
+  wallet.push({
+    id:Date.now(),
+    code,
+    amount,
+    cost
+  });
+
+  assetQty.value = "";
+  assetCost.value = "";
+
+  saveWallet();
+  renderWallet();
+}
+
+function deleteAsset(id){
+  wallet = wallet.filter(x => x.id !== id);
+  saveWallet();
+  renderWallet();
+}
+
+function editAsset(id){
+  const item = wallet.find(x => x.id === id);
+  if(!item) return;
+
+  const newAmount = prompt("Yeni miktar:", item.amount);
+  if(newAmount === null) return;
+
+  const newCost = prompt("Yeni alım maliyeti:", item.cost);
+  if(newCost === null) return;
+
+  item.amount = Number(newAmount || 0);
+  item.cost = Number(newCost || 0);
+
+  saveWallet();
+  renderWallet();
+}
+
+function saveWallet(){
+  localStorage.setItem("smartWalletV9",JSON.stringify(wallet));
+}
+
+function loadWallet(){
+  try{
+    wallet = JSON.parse(localStorage.getItem("smartWalletV9") || "[]");
+  }catch(e){
+    wallet = [];
+  }
+}
+
+function clearWallet(){
+  if(!confirm("Tüm portföy silinsin mi?")) return;
+  wallet = [];
+  saveWallet();
+  renderWallet();
+}
+
+function setFilter(f,btn){
+  activeFilter = f;
+  document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  renderWallet();
+}
+
+function renderWallet(){
+  let totalValue = 0;
+  let totalCostValue = 0;
+
+  const filtered = wallet.filter(x => activeFilter === "all" || assetMap[x.code].type === activeFilter);
+
+  walletTable.innerHTML = filtered.map(x=>{
+    const meta = assetMap[x.code];
+    const price = priceOf(x.code);
+    const value = x.amount * price;
+    const costTotal = x.amount * x.cost;
+    const pl = value - costTotal;
+    const percent = costTotal > 0 ? (pl / costTotal) * 100 : 0;
+    const cls = pl >= 0 ? "profit" : "loss";
+
+    totalValue += value;
+    totalCostValue += costTotal;
+
+    return `
+      <tr>
+        <td><b>${meta.name}</b></td>
+        <td>${meta.type}</td>
+        <td>${qty(x.amount)}</td>
+        <td>${fmt(price)}</td>
+        <td>${fmt(x.cost)}</td>
+        <td>${fmt(value)}</td>
+        <td class="${cls}"><b>${fmt(pl)}</b></td>
+        <td class="${cls}"><b>${pct(percent)}</b></td>
+        <td>
+          <div class="actions">
+            <button class="gray" onclick="editAsset(${x.id})">Düzenle</button>
+            <button class="danger" onclick="deleteAsset(${x.id})">Sil</button>
+          </div>
+        </td>
+      </tr>`;
+  }).join("");
+
+  const totalPLValue = totalValue - totalCostValue;
+  const totalPercentValue = totalCostValue > 0 ? (totalPLValue / totalCostValue) * 100 : 0;
+  const isProfit = totalPLValue >= 0;
 
   portfolioTotal.textContent = fmt(totalValue);
-  totalCost.textContent = fmt(costValue);
-  totalPL.textContent = fmt(plValue);
-  totalPercent.textContent = pct(percentValue);
-
-  const isProfit = plValue >= 0;
+  totalCost.textContent = fmt(totalCostValue);
+  totalPL.textContent = fmt(totalPLValue);
+  totalPercent.textContent = pct(totalPercentValue);
+  plStatus.textContent = isProfit ? "KÂR" : "ZARAR";
 
   totalPL.className = "price " + (isProfit ? "profit flash" : "loss flash");
   totalPercent.className = "price " + (isProfit ? "profit flash" : "loss flash");
   plStatus.className = "price " + (isProfit ? "profit flash" : "loss flash");
-  plStatus.textContent = isProfit ? "KÂR" : "ZARAR";
-
   totalBox.className = "totalBox " + (isProfit ? "" : "lossBox");
-
-  portfolioTable.innerHTML = rows.map(x=>{
-    const c = x.pl >= 0 ? "profit" : "loss";
-    return `
-      <tr>
-        <td><b>${x.name}</b></td>
-        <td>${x.qty}</td>
-        <td>${fmt(x.price)}</td>
-        <td>${fmt(x.costEach)}</td>
-        <td>${fmt(x.value)}</td>
-        <td class="${c}"><b>${fmt(x.pl)}</b></td>
-        <td class="${c}"><b>${pct(x.percent)}</b></td>
-      </tr>
-    `;
-  }).join("");
-}
-
-function savePortfolio(){
-  const data = {};
-  inputs.forEach(id=>data[id]=document.getElementById(id).value);
-  localStorage.setItem("dovizPortfolioV8",JSON.stringify(data));
-  updatePortfolio();
-  alert("Portföy kaydedildi.");
-}
-
-function loadPortfolio(){
-  const raw = localStorage.getItem("dovizPortfolioV8");
-  if(!raw) return;
-  try{
-    const data = JSON.parse(raw);
-    inputs.forEach(id=>{
-      if(data[id] !== undefined) document.getElementById(id).value = data[id];
-    });
-  }catch(e){}
-}
-
-function resetPortfolio(){
-  inputs.forEach(id=>document.getElementById(id).value = 0);
-  localStorage.removeItem("dovizPortfolioV8");
-  updatePortfolio();
 }
 
 function tick(){
-  base.USD = rnd(base.USD,0.0012);
-  base.EUR = rnd(base.EUR,0.0012);
-  base.GBP = rnd(base.GBP,0.0012);
-  base.CHF = rnd(base.CHF,0.0012);
-  base.SAR = rnd(base.SAR,0.0012);
-  base.JPY = rnd(base.JPY,0.0012);
+  base.USD=rnd(base.USD,.0012); base.EUR=rnd(base.EUR,.0012); base.GBP=rnd(base.GBP,.0012);
+  base.CHF=rnd(base.CHF,.0012); base.SAR=rnd(base.SAR,.0012); base.JPY=rnd(base.JPY,.0012);
+  base.GRAM=rnd(base.GRAM,.0025); base.SILVER=rnd(base.SILVER,.0035);
+  base.PLATIN=rnd(base.PLATIN,.003); base.BAKIR=rnd(base.BAKIR,.003);
 
-  base.GRAM = rnd(base.GRAM,0.0025);
-  base.SILVER = rnd(base.SILVER,0.0035);
-  base.PLATIN = rnd(base.PLATIN,0.003);
-  base.BAKIR = rnd(base.BAKIR,0.003);
+  const a = calcAssets();
 
-  const assets = calcAssets();
-
-  usd.textContent = fmt(base.USD);
-  eur.textContent = fmt(base.EUR);
-  gram.textContent = fmt(base.GRAM);
-  silver.textContent = fmt(base.SILVER);
-  ata.textContent = fmt(assets.ata);
-  cumhuriyet.textContent = fmt(assets.cum);
-  platin.textContent = fmt(base.PLATIN);
-  bakir.textContent = fmt(base.BAKIR);
+  usd.textContent=fmt(base.USD);
+  eur.textContent=fmt(base.EUR);
+  gram.textContent=fmt(base.GRAM);
+  silver.textContent=fmt(base.SILVER);
 
   const rows = [
-    ["USD",base.USD],
-    ["EUR",base.EUR],
-    ["GBP",base.GBP],
-    ["CHF",base.CHF],
-    ["SAR",base.SAR],
-    ["JPY",base.JPY],
-    ["GAU/TRY Gram Altın",base.GRAM],
-    ["XAGg/TRY Gram Gümüş",base.SILVER],
-    ["Ata Lira",assets.ata],
-    ["Cumhuriyet Altını",assets.cum],
-    ["Çeyrek Altın",assets.ceyrek],
-    ["Yarım Altın",assets.yarim],
-    ["Tam Altın",assets.tam],
-    ["Platin Gram",base.PLATIN],
-    ["Bakır KG",base.BAKIR]
+    ["USD",base.USD],["EUR",base.EUR],["GBP",base.GBP],["CHF",base.CHF],
+    ["SAR",base.SAR],["JPY",base.JPY],["Gram Altın",base.GRAM],
+    ["Gram Gümüş",base.SILVER],["Ata Lira",a.ATA],["Cumhuriyet Altını",a.CUM],
+    ["Çeyrek Altın",a.CEYREK],["Yarım Altın",a.YARIM],["Tam Altın",a.TAM],
+    ["Platin Gram",base.PLATIN],["Bakır KG",base.BAKIR]
   ];
 
   marketTable.innerHTML = rows.map(x=>{
-    const buy=x[1]*0.996;
-    const sell=x[1]*1.004;
-    const up=Math.random()>.47;
+    const buy=x[1]*.996, sell=x[1]*1.004, up=Math.random()>.47;
     return `<tr>
       <td><b>${x[0]}</b></td>
       <td class="buy">${fmt(buy)}</td>
@@ -475,15 +420,7 @@ function tick(){
     </tr>`;
   }).join("");
 
-  const banks=[
-    ["Ziraat Bankası",.25],
-    ["İş Bankası",.30],
-    ["Garanti BBVA",.38],
-    ["Akbank",.34],
-    ["Yapı Kredi",.36],
-    ["QNB Finansbank",.42]
-  ];
-
+  const banks=[["Ziraat Bankası",.25],["İş Bankası",.30],["Garanti BBVA",.38],["Akbank",.34],["Yapı Kredi",.36],["QNB Finansbank",.42]];
   bankTable.innerHTML=banks.map(b=>{
     const s=b[1];
     return `<tr>
@@ -495,20 +432,14 @@ function tick(){
     </tr>`;
   }).join("");
 
-  updatePortfolio();
+  renderWallet();
 
   tapeText.textContent =
-    `USDTRY ${fmt(base.USD)}  •  EURTRY ${fmt(base.EUR)}  •  GRAM ALTIN ${fmt(base.GRAM)}  •  GRAM GÜMÜŞ ${fmt(base.SILVER)}  •  ATA LİRA ${fmt(assets.ata)}  •  CUMHURİYET ${fmt(assets.cum)}  •  PORTFÖY ${portfolioTotal.textContent}  •  K/Z ${totalPL.textContent}`;
+    `USDTRY ${fmt(base.USD)} • EURTRY ${fmt(base.EUR)} • GRAM ALTIN ${fmt(base.GRAM)} • GRAM GÜMÜŞ ${fmt(base.SILVER)} • ATA LİRA ${fmt(a.ATA)} • PORTFÖY ${portfolioTotal.textContent} • K/Z ${totalPL.textContent}`;
 }
 
-inputs.forEach(id=>{
-  setTimeout(()=>{
-    const el = document.getElementById(id);
-    if(el) el.addEventListener("input",updatePortfolio);
-  },300);
-});
-
-loadPortfolio();
+initAssetSelect();
+loadWallet();
 getReferenceRates().then(tick);
 setInterval(tick,1500);
 setInterval(getReferenceRates,60000);
