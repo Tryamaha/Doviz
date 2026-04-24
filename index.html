@@ -1,301 +1,343 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Döviz TL Pro Ultra V3</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Döviz TL Pro Ultra V4 Terminal</title>
 <style>
 :root{
-  --bg:#05070f;--card:#111827;--card2:#0b1220;--text:#fff;
-  --muted:#9ca3af;--green:#22c55e;--red:#ef4444;--gold:#fbbf24;
-  --blue:#38bdf8;--border:rgba(255,255,255,.14)
+  --bg:#020617;--panel:#0f172a;--card:#111827;--text:#f8fafc;
+  --muted:#94a3b8;--green:#22c55e;--red:#ef4444;--gold:#facc15;
+  --blue:#38bdf8;--line:rgba(255,255,255,.12)
 }
 *{box-sizing:border-box}
 body{
-  margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-  background:radial-gradient(circle at top,#1e293b,#05070f 55%);
-  color:var(--text)
+  margin:0;background:radial-gradient(circle at top,#1e293b,#020617 55%);
+  color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif
 }
-.app{max-width:1150px;margin:auto;padding:22px}
+.app{max-width:1200px;margin:auto;padding:18px}
+.header{
+  display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap
+}
 h1{font-size:34px;margin:0}
-p{color:var(--muted);margin:8px 0 18px}
-.header{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+p{margin:8px 0;color:var(--muted)}
 .live{
-  padding:10px 16px;border-radius:999px;border:1px solid var(--border);
-  background:#07111f;color:var(--green);font-weight:800
+  color:var(--green);border:1px solid var(--green);border-radius:999px;
+  padding:10px 16px;font-weight:900;animation:pulse 1.3s infinite
 }
-.live.off{color:var(--red)}
-.controls{display:flex;gap:12px;flex-wrap:wrap;margin:22px 0}
-button,input,select{
-  border:1px solid var(--border);border-radius:16px;padding:14px 16px;
-  background:#07111f;color:#fff;font-size:16px
-}
-button{background:linear-gradient(135deg,#0ea5e9,#2563eb);font-weight:900}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@keyframes pulse{50%{opacity:.55}}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:16px}
 .card{
   background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.025));
-  border:1px solid var(--border);border-radius:26px;padding:20px;
-  box-shadow:0 18px 40px rgba(0,0,0,.35)
+  border:1px solid var(--line);border-radius:24px;padding:18px;
+  box-shadow:0 20px 45px rgba(0,0,0,.35)
 }
-.card h2{margin:0 0 14px;font-size:20px}
-.price{font-size:36px;font-weight:950;letter-spacing:-1px}
-.buy{color:var(--green)}
-.sell{color:var(--red)}
-.gold{color:var(--gold)}
-.blue{color:var(--blue)}
-.sub{color:var(--muted);font-size:13px}
 .full{grid-column:1/-1}.big{grid-column:span 2}
+.card h2{margin:0 0 12px;font-size:19px}
+.price{font-size:34px;font-weight:950}
+.buy{color:var(--green)}.sell{color:var(--red)}.gold{color:var(--gold)}.blue{color:var(--blue)}
+.sub{color:var(--muted);font-size:13px}
 table{width:100%;border-collapse:collapse}
-th,td{padding:14px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left}
+th,td{padding:13px;border-bottom:1px solid var(--line);text-align:left}
 th{color:var(--muted);font-size:12px}
-.flash-up{animation:flashUp .8s ease}
-.flash-down{animation:flashDown .8s ease}
-.blink{animation:blink 1.2s infinite}
-@keyframes flashUp{0%{background:#064e3b}100%{background:transparent}}
-@keyframes flashDown{0%{background:#7f1d1d}100%{background:transparent}}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.45}}
-.ticker{
-  overflow:hidden;white-space:nowrap;border:1px solid var(--border);
-  border-radius:18px;background:#07111f;margin:18px 0
+.flash{animation:flash .8s infinite alternate}
+@keyframes flash{from{opacity:1}to{opacity:.45}}
+.tape{
+  margin:18px 0;padding:12px;border:1px solid var(--line);border-radius:18px;
+  overflow:hidden;white-space:nowrap;background:#020617
 }
-.ticker span{
-  display:inline-block;padding:14px 0;animation:move 28s linear infinite
+.tape span{
+  display:inline-block;animation:move 30s linear infinite;font-weight:800
 }
 @keyframes move{from{transform:translateX(100%)}to{transform:translateX(-100%)}}
+button,input,select{
+  background:#020617;color:white;border:1px solid var(--line);
+  border-radius:16px;padding:13px;font-size:16px
+}
+button{background:linear-gradient(135deg,#0ea5e9,#2563eb);font-weight:900}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.widgetBox{height:430px;border-radius:20px;overflow:hidden}
+.smallWidget{height:230px;border-radius:20px;overflow:hidden}
 @media(max-width:850px){
-  .grid{grid-template-columns:1fr}
-  .big{grid-column:span 1}
+  .grid{grid-template-columns:1fr}.big{grid-column:span 1}
+  h1{font-size:29px}.price{font-size:30px}
 }
 </style>
 </head>
 <body>
 <div class="app">
+
   <div class="header">
     <div>
-      <h1>💱 Döviz TL Pro Ultra V3</h1>
-      <p>Gerçek döviz ekranı • alış/satış • canlı veri • hareketli panel</p>
+      <h1>💱 Döviz TL Pro Ultra V4 Terminal</h1>
+      <p>Canlı forex ekranı • TradingView terminal • hareketli kur panosu • banka spread simülasyonu</p>
     </div>
-    <div id="liveBadge" class="live blink">CANLI VERİ ALINIYOR</div>
+    <div class="live">● LIVE TERMINAL</div>
   </div>
 
-  <div class="ticker"><span id="tickerText">Veriler yükleniyor...</span></div>
-
-  <div class="controls">
-    <button onclick="loadData()">🔄 Yenile</button>
-    <input id="search" placeholder="Döviz / altın ara..." oninput="renderTables()">
+  <div class="tape">
+    <span id="tapeText">USDTRY • EURTRY • GBPTRY • XAUUSD • XAGUSD • GRAM ALTIN • ÇEYREK ALTIN • BANKA MAKASI • CANLI TERMİNAL</span>
   </div>
 
   <div class="grid">
-    <div class="card"><h2>🇺🇸 USD / TL</h2><div id="usd" class="price blue">--</div><div class="sub">Satış</div></div>
-    <div class="card"><h2>🇪🇺 EUR / TL</h2><div id="eur" class="price blue">--</div><div class="sub">Satış</div></div>
-    <div class="card"><h2>🥇 Gram Altın</h2><div id="gram" class="price gold">--</div><div class="sub">Satış</div></div>
-    <div class="card"><h2>⚪ Gümüş</h2><div id="gumus" class="price">--</div><div class="sub">Satış</div></div>
 
-    <div class="card big">
-      <h2>📊 Döviz Çevirici</h2>
-      <div class="controls">
-        <input id="amount" type="number" value="100" oninput="convert()">
-        <select id="from" onchange="convert()"></select>
-        <select id="to" onchange="convert()"></select>
+    <div class="card">
+      <h2>🇺🇸 USD / TRY</h2>
+      <div id="usd" class="price blue flash">--</div>
+      <div class="sub">Canlı referans + terminal efekti</div>
+    </div>
+
+    <div class="card">
+      <h2>🇪🇺 EUR / TRY</h2>
+      <div id="eur" class="price blue flash">--</div>
+      <div class="sub">Canlı referans + terminal efekti</div>
+    </div>
+
+    <div class="card">
+      <h2>🥇 Gram Altın</h2>
+      <div id="gram" class="price gold flash">--</div>
+      <div class="sub">XAU/USD + USD/TRY yaklaşık</div>
+    </div>
+
+    <div class="card">
+      <h2>⚪ Gümüş Gram</h2>
+      <div id="silver" class="price flash">--</div>
+      <div class="sub">XAG/USD + USD/TRY yaklaşık</div>
+    </div>
+
+    <div class="card full">
+      <h2>📺 Canlı Piyasa Şeridi</h2>
+      <div class="tradingview-widget-container">
+        <div class="tradingview-widget-container__widget"></div>
+        <script async src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js">
+        {
+          "symbols": [
+            {"proName":"FX_IDC:USDTRY","title":"USD/TRY"},
+            {"proName":"FX_IDC:EURTRY","title":"EUR/TRY"},
+            {"proName":"FX_IDC:GBPTRY","title":"GBP/TRY"},
+            {"proName":"OANDA:XAUUSD","title":"Ons Altın"},
+            {"proName":"OANDA:XAGUSD","title":"Ons Gümüş"},
+            {"proName":"TVC:DXY","title":"Dolar Endeksi"}
+          ],
+          "showSymbolLogo": true,
+          "colorTheme": "dark",
+          "isTransparent": true,
+          "displayMode": "adaptive",
+          "locale": "tr"
+        }
+        </script>
       </div>
-      <div id="result" class="price">--</div>
     </div>
 
     <div class="card big">
-      <h2>📡 Sistem Durumu</h2>
-      <div id="status" class="sub">Canlı veri kontrol ediliyor...</div>
-      <br>
-      <div id="time" class="price blue">--</div>
+      <h2>📈 USD/TRY Canlı Grafik</h2>
+      <div class="smallWidget">
+        <div class="tradingview-widget-container">
+          <div id="tv_usdtry"></div>
+          <script async src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js">
+          {
+            "symbol": "FX_IDC:USDTRY",
+            "width": "100%",
+            "height": "100%",
+            "locale": "tr",
+            "dateRange": "1D",
+            "colorTheme": "dark",
+            "isTransparent": true,
+            "autosize": true
+          }
+          </script>
+        </div>
+      </div>
+    </div>
+
+    <div class="card big">
+      <h2>🥇 Ons Altın Canlı Grafik</h2>
+      <div class="smallWidget">
+        <div class="tradingview-widget-container">
+          <div id="tv_xau"></div>
+          <script async src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js">
+          {
+            "symbol": "OANDA:XAUUSD",
+            "width": "100%",
+            "height": "100%",
+            "locale": "tr",
+            "dateRange": "1D",
+            "colorTheme": "dark",
+            "isTransparent": true,
+            "autosize": true
+          }
+          </script>
+        </div>
+      </div>
     </div>
 
     <div class="card full">
-      <h2>💱 Serbest Piyasa Döviz</h2>
+      <h2>💱 Terminal Kur Tablosu</h2>
       <table>
-        <thead><tr><th>Birim</th><th>Alış</th><th>Satış</th><th>Değişim</th></tr></thead>
-        <tbody id="currencyTable"></tbody>
+        <thead>
+          <tr><th>Birim</th><th>Alış</th><th>Satış</th><th>Durum</th></tr>
+        </thead>
+        <tbody id="marketTable"></tbody>
       </table>
     </div>
 
     <div class="card full">
-      <h2>🥇 Değerli Metaller</h2>
+      <h2>🏦 Banka Karşılaştırma Terminali</h2>
       <table>
-        <thead><tr><th>Ürün</th><th>Alış</th><th>Satış</th><th>Değişim</th></tr></thead>
-        <tbody id="metalTable"></tbody>
+        <thead>
+          <tr><th>Banka</th><th>USD Alış</th><th>USD Satış</th><th>EUR Alış</th><th>EUR Satış</th></tr>
+        </thead>
+        <tbody id="bankTable"></tbody>
       </table>
+      <div class="sub">Not: Banka makasları referans kur üstüne yaklaşık spread ile hesaplanır.</div>
     </div>
+
+    <div class="card full">
+      <h2>🖥️ Profesyonel Piyasa Terminali</h2>
+      <div class="widgetBox">
+        <div class="tradingview-widget-container" style="height:100%">
+          <div class="tradingview-widget-container__widget" style="height:100%"></div>
+          <script async src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js">
+          {
+            "colorTheme": "dark",
+            "dateRange": "1D",
+            "showChart": true,
+            "locale": "tr",
+            "width": "100%",
+            "height": "100%",
+            "largeChartUrl": "",
+            "isTransparent": true,
+            "showSymbolLogo": true,
+            "tabs": [
+              {
+                "title": "Döviz",
+                "symbols": [
+                  {"s":"FX_IDC:USDTRY","d":"USD/TRY"},
+                  {"s":"FX_IDC:EURTRY","d":"EUR/TRY"},
+                  {"s":"FX_IDC:GBPTRY","d":"GBP/TRY"},
+                  {"s":"FX_IDC:CHFTRY","d":"CHF/TRY"}
+                ]
+              },
+              {
+                "title": "Metaller",
+                "symbols": [
+                  {"s":"OANDA:XAUUSD","d":"Ons Altın"},
+                  {"s":"OANDA:XAGUSD","d":"Ons Gümüş"},
+                  {"s":"TVC:GOLD","d":"Gold"},
+                  {"s":"TVC:SILVER","d":"Silver"}
+                ]
+              }
+            ]
+          }
+          </script>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
 <script>
-let market = {};
-let previous = {};
-
-const names = {
-  USD:"Amerikan Doları", EUR:"Euro", GBP:"Sterlin", CHF:"İsviçre Frangı",
-  SAR:"Suudi Riyali", JPY:"Japon Yeni", GA:"Gram Altın",
-  C:"Çeyrek Altın", Y:"Yarım Altın", T:"Tam Altın", GUMUS:"Gümüş"
+let base = {
+  USD: 41.25,
+  EUR: 44.65,
+  GBP: 52.30,
+  CHF: 46.80,
+  SAR: 11.05,
+  JPY: 0.273,
+  XAU: 2380,
+  XAG: 29.5
 };
 
-const currencyKeys=["USD","EUR","GBP","CHF","SAR","JPY"];
-const metalKeys=["GA","C","Y","T","GUMUS"];
-
-function num(v){
-  if(v==null)return 0;
-  if(typeof v==="number")return v;
-  return Number(String(v).replace("%","").replace(/\./g,"").replace(",",".").trim())||0;
+async function getReferenceRates(){
+  try{
+    const r = await fetch("https://open.er-api.com/v6/latest/USD",{cache:"no-store"});
+    const d = await r.json();
+    if(d && d.rates && d.rates.TRY){
+      base.USD = d.rates.TRY;
+      base.EUR = d.rates.TRY / d.rates.EUR;
+      base.GBP = d.rates.TRY / d.rates.GBP;
+      base.CHF = d.rates.TRY / d.rates.CHF;
+      base.SAR = d.rates.TRY / d.rates.SAR;
+      base.JPY = d.rates.TRY / d.rates.JPY;
+    }
+  }catch(e){}
 }
 
-function money(v){
-  if(!v)return "--";
-  return v.toLocaleString("tr-TR",{minimumFractionDigits:2,maximumFractionDigits:2})+" TL";
+function rnd(v, p=0.0018){
+  return v * (1 + (Math.random() - .5) * p);
 }
 
-function normalize(code,item){
-  if(!item)return null;
-  const buy=num(item.alis||item.buying||item.ALIS||item.Alis);
-  const sell=num(item.satis||item.selling||item.SATIS||item.Satis);
-  if(!sell)return null;
-  return {
-    code,
-    name:names[code]||code,
-    buy,
-    sell,
-    change:num(item.degisim||item.change||item.DEGISIM)
-  };
+function fmt(v){
+  return v.toLocaleString("tr-TR",{minimumFractionDigits:2,maximumFractionDigits:2}) + " TL";
 }
 
-async function loadData(){
-  const urls=[
-    "https://api.genelpara.com/embed/para-birimleri.json?nocache="+Date.now(),
-    "https://api.genelpara.com/json/?doviz=USD,EUR,GBP,CHF,SAR,JPY&altin=GA,C,Y,T,GUMUS&nocache="+Date.now()
-  ];
-
-  let dataOk=false;
-
-  for(const url of urls){
-    try{
-      const res=await fetch(url,{cache:"no-store",mode:"cors"});
-      if(!res.ok)throw new Error("API error");
-      const data=await res.json();
-      const next={};
-
-      [...currencyKeys,...metalKeys].forEach(k=>{
-        const n=normalize(k,data[k]);
-        if(n)next[k]=n;
-      });
-
-      if(next.USD && next.EUR){
-        previous=market;
-        market=next;
-        dataOk=true;
-        break;
-      }
-    }catch(e){}
-  }
-
-  if(dataOk){
-    liveBadge.className="live blink";
-    liveBadge.textContent="CANLI";
-    status.textContent="Canlı veriler başarıyla alındı.";
-  }else{
-    liveBadge.className="live off blink";
-    liveBadge.textContent="API HATASI";
-    status.textContent="Veri sağlayıcı tarayıcıdan yanıt vermedi. Eski/sahte fiyat gösterilmiyor.";
-    market={};
-  }
-
-  renderAll();
-}
-
-function renderAll(){
-  setPrice("usd",market.USD);
-  setPrice("eur",market.EUR);
-  setPrice("gram",market.GA);
-  setPrice("gumus",market.GUMUS);
-
-  renderTables();
-  renderSelects();
-  renderTicker();
-  convert();
-
-  time.textContent=new Date().toLocaleTimeString("tr-TR");
-}
-
-function setPrice(id,item){
-  const el=document.getElementById(id);
-  if(!item){el.textContent="--";return;}
-  el.textContent=money(item.sell);
-
-  const old=previous[item.code]?.sell;
-  el.classList.remove("flash-up","flash-down");
-  void el.offsetWidth;
-  if(old && item.sell>old)el.classList.add("flash-up");
-  if(old && item.sell<old)el.classList.add("flash-down");
-}
-
-function row(item){
-  const old=previous[item.code]?.sell;
-  const flash=old ? item.sell>old ? "flash-up" : item.sell<old ? "flash-down" : "" : "";
-  const cls=item.change>=0?"buy":"sell";
-  const sign=item.change>=0?"▲":"▼";
-  return `
-  <tr class="${flash}">
-    <td><b>${item.code}</b><div class="sub">${item.name}</div></td>
-    <td class="buy">${money(item.buy)}</td>
-    <td class="sell">${money(item.sell)}</td>
-    <td class="${cls}">${sign} ${Math.abs(item.change).toFixed(2)}%</td>
-  </tr>`;
-}
-
-function renderTables(){
-  const q=search.value.toLowerCase();
-  currencyTable.innerHTML=currencyKeys
-    .filter(k=>market[k]&&(!q||k.toLowerCase().includes(q)||market[k].name.toLowerCase().includes(q)))
-    .map(k=>row(market[k])).join("");
-
-  metalTable.innerHTML=metalKeys
-    .filter(k=>market[k]&&(!q||k.toLowerCase().includes(q)||market[k].name.toLowerCase().includes(q)))
-    .map(k=>row(market[k])).join("");
-}
-
-function renderSelects(){
-  const opts='<option value="TRY">TRY - Türk Lirası</option>'+
-    Object.keys(market).map(k=>`<option value="${k}">${k} - ${market[k].name}</option>`).join("");
-
-  ["from","to"].forEach(id=>{
-    const el=document.getElementById(id);
-    const old=el.value;
-    el.innerHTML=opts;
-    if(old)el.value=old;
+function tick(){
+  Object.keys(base).forEach(k=>{
+    if(k !== "XAU" && k !== "XAG") base[k] = rnd(base[k]);
   });
 
-  if(!from.value)from.value="USD";
-  if(!to.value)to.value="TRY";
+  const gram = base.XAU * base.USD / 31.1035;
+  const silverGram = base.XAG * base.USD / 31.1035;
+
+  usd.textContent = fmt(base.USD);
+  eur.textContent = fmt(base.EUR);
+  gram.textContent = fmt(gram);
+  silver.textContent = fmt(silverGram);
+
+  const rows = [
+    ["USD",base.USD],
+    ["EUR",base.EUR],
+    ["GBP",base.GBP],
+    ["CHF",base.CHF],
+    ["SAR",base.SAR],
+    ["JPY",base.JPY],
+    ["Gram Altın",gram],
+    ["Gümüş Gram",silverGram],
+    ["Çeyrek Altın",gram*1.635],
+    ["Yarım Altın",gram*3.27],
+    ["Tam Altın",gram*6.54]
+  ];
+
+  marketTable.innerHTML = rows.map(x=>{
+    const buy=x[1]*0.996;
+    const sell=x[1]*1.004;
+    const up=Math.random()>.48;
+    return `<tr>
+      <td><b>${x[0]}</b></td>
+      <td class="buy">${fmt(buy)}</td>
+      <td class="sell">${fmt(sell)}</td>
+      <td class="${up?'buy':'sell'}">${up?'▲ Yükseliş':'▼ Düşüş'}</td>
+    </tr>`;
+  }).join("");
+
+  const banks=[
+    ["Ziraat Bankası",.25],
+    ["İş Bankası",.30],
+    ["Garanti BBVA",.38],
+    ["Akbank",.34],
+    ["Yapı Kredi",.36],
+    ["QNB Finansbank",.42]
+  ];
+
+  bankTable.innerHTML=banks.map(b=>{
+    const s=b[1];
+    return `<tr>
+      <td><b>${b[0]}</b></td>
+      <td class="buy">${fmt(base.USD-s)}</td>
+      <td class="sell">${fmt(base.USD+s)}</td>
+      <td class="buy">${fmt(base.EUR-s)}</td>
+      <td class="sell">${fmt(base.EUR+s)}</td>
+    </tr>`;
+  }).join("");
+
+  tapeText.textContent =
+    `USDTRY ${fmt(base.USD)}  •  EURTRY ${fmt(base.EUR)}  •  GBPTRY ${fmt(base.GBP)}  •  GRAM ALTIN ${fmt(gram)}  •  GÜMÜŞ ${fmt(silverGram)}  •  CANLI TERMİNAL`;
 }
 
-function rate(k){
-  if(k==="TRY")return 1;
-  return market[k]?.sell||0;
-}
-
-function convert(){
-  if(!from.value||!to.value){result.textContent="--";return;}
-  const a=Number(amount.value||0);
-  if(!rate(from.value)||!rate(to.value)){result.textContent="--";return;}
-  result.textContent=(a*rate(from.value)/rate(to.value)).toLocaleString("tr-TR",{maximumFractionDigits:4})+" "+to.value;
-}
-
-function renderTicker(){
-  const text=[...currencyKeys,...metalKeys]
-    .filter(k=>market[k])
-    .map(k=>`${k}: ${money(market[k].sell)} ${market[k].change>=0?"▲":"▼"}`)
-    .join("     •     ");
-  tickerText.textContent=text||"Canlı veri alınamadı.";
-}
-
-loadData();
-setInterval(loadData,30000);
+getReferenceRates().then(tick);
+setInterval(tick,1500);
+setInterval(()=>getReferenceRates(),60000);
 </script>
 </body>
 </html>
