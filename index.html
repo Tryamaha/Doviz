@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Döviz TL Pro Ultra V7 Portfolio</title>
+<title>Döviz TL Pro Ultra V8 Portfolio P/L</title>
 <style>
 :root{
   --bg:#020617;--card:#111827;--text:#f8fafc;--muted:#94a3b8;
@@ -17,13 +17,13 @@ body{
   color:var(--text);
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif
 }
-.app{max-width:1200px;margin:auto;padding:18px}
-.header{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:flex-start}
-h1{font-size:30px;margin:0;line-height:1.15}
+.app{max-width:1250px;margin:auto;padding:18px}
+.header{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+h1{font-size:30px;margin:0}
 p{margin:8px 0;color:var(--muted)}
 .live{
   color:var(--green);border:1px solid var(--green);border-radius:999px;
-  padding:10px 16px;font-weight:900;animation:pulse 1.2s infinite;white-space:nowrap
+  padding:10px 16px;font-weight:900;animation:pulse 1.2s infinite
 }
 @keyframes pulse{50%{opacity:.55}}
 .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:16px}
@@ -34,11 +34,14 @@ p{margin:8px 0;color:var(--muted)}
 }
 .full{grid-column:1/-1}.big{grid-column:span 2}
 .card h2{margin:0 0 12px;font-size:19px}
-.price{font-size:34px;font-weight:950;letter-spacing:-.7px}
-.buy{color:var(--green)}.sell{color:var(--red)}.gold{color:var(--gold)}.blue{color:var(--blue)}
+.price{font-size:32px;font-weight:950;letter-spacing:-.7px}
+.buy,.profit{color:var(--green)}
+.sell,.loss{color:var(--red)}
+.gold{color:var(--gold)}
+.blue{color:var(--blue)}
 .sub{color:var(--muted);font-size:13px}
 table{width:100%;border-collapse:collapse}
-th,td{padding:13px;border-bottom:1px solid var(--line);text-align:left}
+th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;font-size:14px}
 th{color:var(--muted);font-size:12px}
 .flash{animation:flash .8s infinite alternate}
 @keyframes flash{from{opacity:1}to{opacity:.50}}
@@ -49,8 +52,8 @@ th{color:var(--muted);font-size:12px}
 .tape span{display:inline-block;animation:move 26s linear infinite;font-weight:800}
 @keyframes move{from{transform:translateX(100%)}to{transform:translateX(-100%)}}
 input{
-  width:100%;padding:12px;border-radius:14px;border:1px solid var(--line);
-  background:#020617;color:white;font-size:16px
+  width:100%;padding:10px;border-radius:12px;border:1px solid var(--line);
+  background:#020617;color:white;font-size:15px
 }
 button{
   padding:12px 16px;border-radius:14px;border:1px solid var(--line);
@@ -58,9 +61,6 @@ button{
   color:white;font-weight:900;font-size:15px
 }
 .controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-.widgetBox{height:430px;border-radius:20px;overflow:hidden}
-.smallWidget{height:230px;border-radius:20px;overflow:hidden}
-.note{font-size:12px;color:var(--muted);margin-top:8px}
 .portfolio-grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
@@ -79,17 +79,36 @@ button{
   margin-bottom:8px;
 }
 .totalBox{
-  background:linear-gradient(135deg,rgba(34,197,94,.15),rgba(56,189,248,.12));
-  border:1px solid rgba(34,197,94,.35);
   border-radius:22px;
   padding:18px;
   margin-top:14px;
+  border:1px solid rgba(34,197,94,.35);
+  background:linear-gradient(135deg,rgba(34,197,94,.15),rgba(56,189,248,.12));
 }
-@media(max-width:850px){
+.lossBox{
+  border-color:rgba(239,68,68,.45);
+  background:linear-gradient(135deg,rgba(239,68,68,.18),rgba(127,29,29,.15));
+}
+.pl-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-top:14px;
+}
+.pl-card{
+  background:#020617;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:14px;
+}
+.widgetBox{height:430px;border-radius:20px;overflow:hidden}
+.smallWidget{height:230px;border-radius:20px;overflow:hidden}
+@media(max-width:900px){
   .grid{grid-template-columns:1fr}.big{grid-column:span 1}
-  .portfolio-grid{grid-template-columns:1fr 1fr}
-  h1{font-size:27px}.price{font-size:30px}
+  .portfolio-grid,.pl-grid{grid-template-columns:1fr 1fr}
+  h1{font-size:27px}.price{font-size:28px}
   .app{padding:14px}
+  th,td{font-size:12px;padding:10px}
 }
 </style>
 </head>
@@ -99,14 +118,14 @@ button{
 
 <div class="header">
   <div>
-    <h1>💱 Döviz TL Pro Ultra V7 Portfolio</h1>
-    <p>USD/EUR • gram altın • gram gümüş • Ata Lira • Cumhuriyet Altını • platin • bakır • portföy cüzdan</p>
+    <h1>💱 Döviz TL Pro Ultra V8 Portfolio P/L</h1>
+    <p>Canlı terminal • portföy cüzdan • alım maliyeti • kâr / zarar ekranı</p>
   </div>
   <div class="live">● LIVE TERMINAL</div>
 </div>
 
 <div class="tape">
-  <span id="tapeText">USDTRY • EURTRY • GRAM ALTIN • GRAM GÜMÜŞ • ATA LİRA • CUMHURİYET ALTINI • PLATİN • BAKIR • PORTFÖY</span>
+  <span id="tapeText">USDTRY • EURTRY • GRAM ALTIN • GRAM GÜMÜŞ • ATA LİRA • CUMHURİYET • PLATİN • BAKIR • PORTFÖY KÂR/ZARAR</span>
 </div>
 
 <div class="grid">
@@ -138,13 +157,13 @@ button{
   <div class="card">
     <h2>🪙 Ata Lira</h2>
     <div id="ata" class="price gold flash">--</div>
-    <div class="sub">Gram altın katsayılı yaklaşık</div>
+    <div class="sub">Yaklaşık piyasa fiyatı</div>
   </div>
 
   <div class="card">
     <h2>🏛️ Cumhuriyet Altını</h2>
     <div id="cumhuriyet" class="price gold flash">--</div>
-    <div class="sub">Gram altın katsayılı yaklaşık</div>
+    <div class="sub">Yaklaşık piyasa fiyatı</div>
   </div>
 
   <div class="card">
@@ -160,93 +179,80 @@ button{
   </div>
 
   <div class="card full">
-    <h2>👛 Portföy / Cüzdan</h2>
+    <h2>👛 Portföy / Cüzdan + Alım Maliyeti</h2>
+
     <div class="portfolio-grid">
       <div class="asset-box"><label>USD miktarı</label><input id="pUSD" type="number" step="0.01" value="0"></div>
+      <div class="asset-box"><label>USD alım maliyeti / adet</label><input id="cUSD" type="number" step="0.01" value="0"></div>
+
       <div class="asset-box"><label>EUR miktarı</label><input id="pEUR" type="number" step="0.01" value="0"></div>
-      <div class="asset-box"><label>Gram Altın</label><input id="pGRAM" type="number" step="0.01" value="0"></div>
-      <div class="asset-box"><label>Gram Gümüş</label><input id="pSILVER" type="number" step="0.01" value="0"></div>
+      <div class="asset-box"><label>EUR alım maliyeti / adet</label><input id="cEUR" type="number" step="0.01" value="0"></div>
+
+      <div class="asset-box"><label>Gram Altın miktarı</label><input id="pGRAM" type="number" step="0.01" value="0"></div>
+      <div class="asset-box"><label>Gram Altın maliyeti</label><input id="cGRAM" type="number" step="0.01" value="0"></div>
+
+      <div class="asset-box"><label>Gram Gümüş miktarı</label><input id="pSILVER" type="number" step="0.01" value="0"></div>
+      <div class="asset-box"><label>Gram Gümüş maliyeti</label><input id="cSILVER" type="number" step="0.01" value="0"></div>
+
       <div class="asset-box"><label>Ata Lira adet</label><input id="pATA" type="number" step="1" value="0"></div>
+      <div class="asset-box"><label>Ata Lira maliyeti / adet</label><input id="cATA" type="number" step="0.01" value="0"></div>
+
       <div class="asset-box"><label>Cumhuriyet Altını adet</label><input id="pCUM" type="number" step="1" value="0"></div>
+      <div class="asset-box"><label>Cumhuriyet maliyeti / adet</label><input id="cCUM" type="number" step="0.01" value="0"></div>
+
       <div class="asset-box"><label>Platin gram</label><input id="pPLATIN" type="number" step="0.01" value="0"></div>
+      <div class="asset-box"><label>Platin maliyeti / gram</label><input id="cPLATIN" type="number" step="0.01" value="0"></div>
+
       <div class="asset-box"><label>Bakır kg</label><input id="pBAKIR" type="number" step="0.01" value="0"></div>
+      <div class="asset-box"><label>Bakır maliyeti / kg</label><input id="cBAKIR" type="number" step="0.01" value="0"></div>
     </div>
 
     <div class="controls">
-      <button onclick="savePortfolio()">💾 Portföyü Kaydet</button>
+      <button onclick="savePortfolio()">💾 Kaydet</button>
       <button onclick="resetPortfolio()">🧹 Sıfırla</button>
     </div>
 
-    <div class="totalBox">
+    <div id="totalBox" class="totalBox">
       <div class="sub">Toplam Portföy Değeri</div>
       <div id="portfolioTotal" class="price buy">--</div>
+    </div>
+
+    <div class="pl-grid">
+      <div class="pl-card">
+        <div class="sub">Toplam Maliyet</div>
+        <div id="totalCost" class="price blue">--</div>
+      </div>
+      <div class="pl-card">
+        <div class="sub">Toplam Kâr / Zarar</div>
+        <div id="totalPL" class="price">--</div>
+      </div>
+      <div class="pl-card">
+        <div class="sub">Getiri Oranı</div>
+        <div id="totalPercent" class="price">--</div>
+      </div>
+      <div class="pl-card">
+        <div class="sub">Durum</div>
+        <div id="plStatus" class="price">--</div>
+      </div>
     </div>
   </div>
 
   <div class="card full">
-    <h2>📺 Canlı Piyasa Şeridi</h2>
-    <div class="tradingview-widget-container">
-      <div class="tradingview-widget-container__widget"></div>
-      <script async src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js">
-      {
-        "symbols": [
-          {"proName":"FX_IDC:USDTRY","title":"USD/TRY"},
-          {"proName":"FX_IDC:EURTRY","title":"EUR/TRY"},
-          {"proName":"FX_IDC:GBPTRY","title":"GBP/TRY"},
-          {"proName":"FX_IDC:GAUTRY","title":"GAU/TRY"},
-          {"proName":"OANDA:XPTUSD","title":"Platin Ons"},
-          {"proName":"CAPITALCOM:COPPER","title":"Bakır"}
-        ],
-        "showSymbolLogo": true,
-        "colorTheme": "dark",
-        "isTransparent": true,
-        "displayMode": "adaptive",
-        "locale": "tr"
-      }
-      </script>
-    </div>
-  </div>
-
-  <div class="card big">
-    <h2>📈 USD/TRY Canlı Grafik</h2>
-    <div class="smallWidget">
-      <div class="tradingview-widget-container">
-        <div class="tradingview-widget-container__widget"></div>
-        <script async src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js">
-        {
-          "symbol":"FX_IDC:USDTRY",
-          "width":"100%",
-          "height":"100%",
-          "locale":"tr",
-          "dateRange":"1D",
-          "colorTheme":"dark",
-          "isTransparent":true,
-          "autosize":true
-        }
-        </script>
-      </div>
-    </div>
-  </div>
-
-  <div class="card big">
-    <h2>🥇 Gram Altın Canlı Grafik</h2>
-    <div class="smallWidget">
-      <div class="tradingview-widget-container">
-        <div class="tradingview-widget-container__widget"></div>
-        <script async src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js">
-        {
-          "symbol":"FX_IDC:GAUTRY",
-          "width":"100%",
-          "height":"100%",
-          "locale":"tr",
-          "dateRange":"1D",
-          "colorTheme":"dark",
-          "isTransparent":true,
-          "autosize":true
-        }
-        </script>
-      </div>
-    </div>
+    <h2>📊 Portföy Kâr / Zarar Detayı</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Varlık</th>
+          <th>Miktar</th>
+          <th>Güncel Fiyat</th>
+          <th>Maliyet</th>
+          <th>Değer</th>
+          <th>K/Z</th>
+          <th>%</th>
+        </tr>
+      </thead>
+      <tbody id="portfolioTable"></tbody>
+    </table>
   </div>
 
   <div class="card full">
@@ -287,7 +293,10 @@ let base = {
   BAKIR: 420
 };
 
-const portfolioInputs = ["pUSD","pEUR","pGRAM","pSILVER","pATA","pCUM","pPLATIN","pBAKIR"];
+const inputs = [
+  "pUSD","cUSD","pEUR","cEUR","pGRAM","cGRAM","pSILVER","cSILVER",
+  "pATA","cATA","pCUM","cCUM","pPLATIN","cPLATIN","pBAKIR","cBAKIR"
+];
 
 async function getReferenceRates(){
   try{
@@ -313,6 +322,10 @@ function fmt(v){
   return v.toLocaleString("tr-TR",{minimumFractionDigits:2,maximumFractionDigits:2}) + " TL";
 }
 
+function pct(v){
+  return v.toLocaleString("tr-TR",{minimumFractionDigits:2,maximumFractionDigits:2}) + "%";
+}
+
 function n(id){
   return Number(document.getElementById(id).value || 0);
 }
@@ -323,48 +336,88 @@ function calcAssets(){
   const ceyrek = base.GRAM * 1.635;
   const yarim = base.GRAM * 3.27;
   const tam = base.GRAM * 6.54;
-
   return {ata,cum,ceyrek,yarim,tam};
+}
+
+function assetRow(name, qty, price, costEach){
+  const value = qty * price;
+  const cost = qty * costEach;
+  const pl = value - cost;
+  const percent = cost > 0 ? (pl / cost) * 100 : 0;
+  return {name, qty, price, costEach, value, cost, pl, percent};
 }
 
 function updatePortfolio(){
   const a = calcAssets();
 
-  const total =
-    n("pUSD") * base.USD +
-    n("pEUR") * base.EUR +
-    n("pGRAM") * base.GRAM +
-    n("pSILVER") * base.SILVER +
-    n("pATA") * a.ata +
-    n("pCUM") * a.cum +
-    n("pPLATIN") * base.PLATIN +
-    n("pBAKIR") * base.BAKIR;
+  const rows = [
+    assetRow("USD", n("pUSD"), base.USD, n("cUSD")),
+    assetRow("EUR", n("pEUR"), base.EUR, n("cEUR")),
+    assetRow("Gram Altın", n("pGRAM"), base.GRAM, n("cGRAM")),
+    assetRow("Gram Gümüş", n("pSILVER"), base.SILVER, n("cSILVER")),
+    assetRow("Ata Lira", n("pATA"), a.ata, n("cATA")),
+    assetRow("Cumhuriyet Altını", n("pCUM"), a.cum, n("cCUM")),
+    assetRow("Platin Gram", n("pPLATIN"), base.PLATIN, n("cPLATIN")),
+    assetRow("Bakır KG", n("pBAKIR"), base.BAKIR, n("cBAKIR"))
+  ];
 
-  portfolioTotal.textContent = fmt(total);
+  const totalValue = rows.reduce((s,x)=>s+x.value,0);
+  const costValue = rows.reduce((s,x)=>s+x.cost,0);
+  const plValue = totalValue - costValue;
+  const percentValue = costValue > 0 ? (plValue / costValue) * 100 : 0;
+
+  portfolioTotal.textContent = fmt(totalValue);
+  totalCost.textContent = fmt(costValue);
+  totalPL.textContent = fmt(plValue);
+  totalPercent.textContent = pct(percentValue);
+
+  const isProfit = plValue >= 0;
+
+  totalPL.className = "price " + (isProfit ? "profit flash" : "loss flash");
+  totalPercent.className = "price " + (isProfit ? "profit flash" : "loss flash");
+  plStatus.className = "price " + (isProfit ? "profit flash" : "loss flash");
+  plStatus.textContent = isProfit ? "KÂR" : "ZARAR";
+
+  totalBox.className = "totalBox " + (isProfit ? "" : "lossBox");
+
+  portfolioTable.innerHTML = rows.map(x=>{
+    const c = x.pl >= 0 ? "profit" : "loss";
+    return `
+      <tr>
+        <td><b>${x.name}</b></td>
+        <td>${x.qty}</td>
+        <td>${fmt(x.price)}</td>
+        <td>${fmt(x.costEach)}</td>
+        <td>${fmt(x.value)}</td>
+        <td class="${c}"><b>${fmt(x.pl)}</b></td>
+        <td class="${c}"><b>${pct(x.percent)}</b></td>
+      </tr>
+    `;
+  }).join("");
 }
 
 function savePortfolio(){
   const data = {};
-  portfolioInputs.forEach(id=>data[id]=document.getElementById(id).value);
-  localStorage.setItem("dovizPortfolioV7",JSON.stringify(data));
+  inputs.forEach(id=>data[id]=document.getElementById(id).value);
+  localStorage.setItem("dovizPortfolioV8",JSON.stringify(data));
   updatePortfolio();
   alert("Portföy kaydedildi.");
 }
 
 function loadPortfolio(){
-  const raw = localStorage.getItem("dovizPortfolioV7");
+  const raw = localStorage.getItem("dovizPortfolioV8");
   if(!raw) return;
   try{
     const data = JSON.parse(raw);
-    portfolioInputs.forEach(id=>{
+    inputs.forEach(id=>{
       if(data[id] !== undefined) document.getElementById(id).value = data[id];
     });
   }catch(e){}
 }
 
 function resetPortfolio(){
-  portfolioInputs.forEach(id=>document.getElementById(id).value = 0);
-  localStorage.removeItem("dovizPortfolioV7");
+  inputs.forEach(id=>document.getElementById(id).value = 0);
+  localStorage.removeItem("dovizPortfolioV8");
   updatePortfolio();
 }
 
@@ -442,13 +495,13 @@ function tick(){
     </tr>`;
   }).join("");
 
-  tapeText.textContent =
-    `USDTRY ${fmt(base.USD)}  •  EURTRY ${fmt(base.EUR)}  •  GRAM ALTIN ${fmt(base.GRAM)}  •  GRAM GÜMÜŞ ${fmt(base.SILVER)}  •  ATA LİRA ${fmt(assets.ata)}  •  CUMHURİYET ALTINI ${fmt(assets.cum)}  •  PLATİN ${fmt(base.PLATIN)}  •  BAKIR KG ${fmt(base.BAKIR)}  •  PORTFÖY ${portfolioTotal.textContent}`;
-
   updatePortfolio();
+
+  tapeText.textContent =
+    `USDTRY ${fmt(base.USD)}  •  EURTRY ${fmt(base.EUR)}  •  GRAM ALTIN ${fmt(base.GRAM)}  •  GRAM GÜMÜŞ ${fmt(base.SILVER)}  •  ATA LİRA ${fmt(assets.ata)}  •  CUMHURİYET ${fmt(assets.cum)}  •  PORTFÖY ${portfolioTotal.textContent}  •  K/Z ${totalPL.textContent}`;
 }
 
-portfolioInputs.forEach(id=>{
+inputs.forEach(id=>{
   setTimeout(()=>{
     const el = document.getElementById(id);
     if(el) el.addEventListener("input",updatePortfolio);
