@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Döviz TL Pro Ultra V6 Final</title>
+<title>Döviz TL Pro Ultra V7 Portfolio</title>
 <style>
 :root{
   --bg:#020617;--card:#111827;--text:#f8fafc;--muted:#94a3b8;
@@ -46,13 +46,48 @@ th{color:var(--muted);font-size:12px}
   margin:18px 0 0;padding:12px;border:1px solid var(--line);border-radius:18px;
   overflow:hidden;white-space:nowrap;background:#020617;min-height:46px
 }
-.tape span{display:inline-block;animation:move 24s linear infinite;font-weight:800}
+.tape span{display:inline-block;animation:move 26s linear infinite;font-weight:800}
 @keyframes move{from{transform:translateX(100%)}to{transform:translateX(-100%)}}
+input{
+  width:100%;padding:12px;border-radius:14px;border:1px solid var(--line);
+  background:#020617;color:white;font-size:16px
+}
+button{
+  padding:12px 16px;border-radius:14px;border:1px solid var(--line);
+  background:linear-gradient(135deg,#0ea5e9,#2563eb);
+  color:white;font-weight:900;font-size:15px
+}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
 .widgetBox{height:430px;border-radius:20px;overflow:hidden}
 .smallWidget{height:230px;border-radius:20px;overflow:hidden}
 .note{font-size:12px;color:var(--muted);margin-top:8px}
+.portfolio-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+.asset-box{
+  background:#020617;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:14px;
+}
+.asset-box label{
+  display:block;
+  font-size:13px;
+  color:var(--muted);
+  margin-bottom:8px;
+}
+.totalBox{
+  background:linear-gradient(135deg,rgba(34,197,94,.15),rgba(56,189,248,.12));
+  border:1px solid rgba(34,197,94,.35);
+  border-radius:22px;
+  padding:18px;
+  margin-top:14px;
+}
 @media(max-width:850px){
   .grid{grid-template-columns:1fr}.big{grid-column:span 1}
+  .portfolio-grid{grid-template-columns:1fr 1fr}
   h1{font-size:27px}.price{font-size:30px}
   .app{padding:14px}
 }
@@ -64,14 +99,14 @@ th{color:var(--muted);font-size:12px}
 
 <div class="header">
   <div>
-    <h1>💱 Döviz TL Pro Ultra V6 Final</h1>
-    <p>USD/EUR • GAU/TRY gram altın • XAGg/TRY gram gümüş • banka spread • canlı terminal</p>
+    <h1>💱 Döviz TL Pro Ultra V7 Portfolio</h1>
+    <p>USD/EUR • gram altın • gram gümüş • Ata Lira • Cumhuriyet Altını • platin • bakır • portföy cüzdan</p>
   </div>
   <div class="live">● LIVE TERMINAL</div>
 </div>
 
 <div class="tape">
-  <span id="tapeText">USDTRY • EURTRY • GBPTRY • GAU/TRY GRAM ALTIN • XAGg/TRY GRAM GÜMÜŞ • ÇEYREK ALTIN • CANLI TERMİNAL</span>
+  <span id="tapeText">USDTRY • EURTRY • GRAM ALTIN • GRAM GÜMÜŞ • ATA LİRA • CUMHURİYET ALTINI • PLATİN • BAKIR • PORTFÖY</span>
 </div>
 
 <div class="grid">
@@ -100,6 +135,54 @@ th{color:var(--muted);font-size:12px}
     <div class="sub">XAGg/TRY referanslı terminal fiyatı</div>
   </div>
 
+  <div class="card">
+    <h2>🪙 Ata Lira</h2>
+    <div id="ata" class="price gold flash">--</div>
+    <div class="sub">Gram altın katsayılı yaklaşık</div>
+  </div>
+
+  <div class="card">
+    <h2>🏛️ Cumhuriyet Altını</h2>
+    <div id="cumhuriyet" class="price gold flash">--</div>
+    <div class="sub">Gram altın katsayılı yaklaşık</div>
+  </div>
+
+  <div class="card">
+    <h2>⚙️ Platin Gram</h2>
+    <div id="platin" class="price flash">--</div>
+    <div class="sub">Terminal referanslı yaklaşık</div>
+  </div>
+
+  <div class="card">
+    <h2>🔶 Bakır KG</h2>
+    <div id="bakir" class="price flash">--</div>
+    <div class="sub">Terminal referanslı yaklaşık</div>
+  </div>
+
+  <div class="card full">
+    <h2>👛 Portföy / Cüzdan</h2>
+    <div class="portfolio-grid">
+      <div class="asset-box"><label>USD miktarı</label><input id="pUSD" type="number" step="0.01" value="0"></div>
+      <div class="asset-box"><label>EUR miktarı</label><input id="pEUR" type="number" step="0.01" value="0"></div>
+      <div class="asset-box"><label>Gram Altın</label><input id="pGRAM" type="number" step="0.01" value="0"></div>
+      <div class="asset-box"><label>Gram Gümüş</label><input id="pSILVER" type="number" step="0.01" value="0"></div>
+      <div class="asset-box"><label>Ata Lira adet</label><input id="pATA" type="number" step="1" value="0"></div>
+      <div class="asset-box"><label>Cumhuriyet Altını adet</label><input id="pCUM" type="number" step="1" value="0"></div>
+      <div class="asset-box"><label>Platin gram</label><input id="pPLATIN" type="number" step="0.01" value="0"></div>
+      <div class="asset-box"><label>Bakır kg</label><input id="pBAKIR" type="number" step="0.01" value="0"></div>
+    </div>
+
+    <div class="controls">
+      <button onclick="savePortfolio()">💾 Portföyü Kaydet</button>
+      <button onclick="resetPortfolio()">🧹 Sıfırla</button>
+    </div>
+
+    <div class="totalBox">
+      <div class="sub">Toplam Portföy Değeri</div>
+      <div id="portfolioTotal" class="price buy">--</div>
+    </div>
+  </div>
+
   <div class="card full">
     <h2>📺 Canlı Piyasa Şeridi</h2>
     <div class="tradingview-widget-container">
@@ -111,7 +194,8 @@ th{color:var(--muted);font-size:12px}
           {"proName":"FX_IDC:EURTRY","title":"EUR/TRY"},
           {"proName":"FX_IDC:GBPTRY","title":"GBP/TRY"},
           {"proName":"FX_IDC:GAUTRY","title":"GAU/TRY"},
-          {"proName":"FX_IDC:XAGGTRY","title":"XAGg/TRY"}
+          {"proName":"OANDA:XPTUSD","title":"Platin Ons"},
+          {"proName":"CAPITALCOM:COPPER","title":"Bakır"}
         ],
         "showSymbolLogo": true,
         "colorTheme": "dark",
@@ -121,7 +205,6 @@ th{color:var(--muted);font-size:12px}
       }
       </script>
     </div>
-    <div class="note">TradingView sembolleri bazı cihazlarda farklı veri sağlayıcıya göre değişebilir.</div>
   </div>
 
   <div class="card big">
@@ -167,7 +250,7 @@ th{color:var(--muted);font-size:12px}
   </div>
 
   <div class="card full">
-    <h2>💱 Terminal Kur Tablosu</h2>
+    <h2>💱 Terminal Kur ve Maden Tablosu</h2>
     <table>
       <thead>
         <tr><th>Birim</th><th>Alış</th><th>Satış</th><th>Durum</th></tr>
@@ -199,8 +282,12 @@ let base = {
   SAR: 11.99,
   JPY: 0.292,
   GRAM: 6812.50,
-  SILVER: 109.50
+  SILVER: 109.50,
+  PLATIN: 1600,
+  BAKIR: 420
 };
+
+const portfolioInputs = ["pUSD","pEUR","pGRAM","pSILVER","pATA","pCUM","pPLATIN","pBAKIR"];
 
 async function getReferenceRates(){
   try{
@@ -226,6 +313,61 @@ function fmt(v){
   return v.toLocaleString("tr-TR",{minimumFractionDigits:2,maximumFractionDigits:2}) + " TL";
 }
 
+function n(id){
+  return Number(document.getElementById(id).value || 0);
+}
+
+function calcAssets(){
+  const ata = base.GRAM * 7.216;
+  const cum = base.GRAM * 7.216;
+  const ceyrek = base.GRAM * 1.635;
+  const yarim = base.GRAM * 3.27;
+  const tam = base.GRAM * 6.54;
+
+  return {ata,cum,ceyrek,yarim,tam};
+}
+
+function updatePortfolio(){
+  const a = calcAssets();
+
+  const total =
+    n("pUSD") * base.USD +
+    n("pEUR") * base.EUR +
+    n("pGRAM") * base.GRAM +
+    n("pSILVER") * base.SILVER +
+    n("pATA") * a.ata +
+    n("pCUM") * a.cum +
+    n("pPLATIN") * base.PLATIN +
+    n("pBAKIR") * base.BAKIR;
+
+  portfolioTotal.textContent = fmt(total);
+}
+
+function savePortfolio(){
+  const data = {};
+  portfolioInputs.forEach(id=>data[id]=document.getElementById(id).value);
+  localStorage.setItem("dovizPortfolioV7",JSON.stringify(data));
+  updatePortfolio();
+  alert("Portföy kaydedildi.");
+}
+
+function loadPortfolio(){
+  const raw = localStorage.getItem("dovizPortfolioV7");
+  if(!raw) return;
+  try{
+    const data = JSON.parse(raw);
+    portfolioInputs.forEach(id=>{
+      if(data[id] !== undefined) document.getElementById(id).value = data[id];
+    });
+  }catch(e){}
+}
+
+function resetPortfolio(){
+  portfolioInputs.forEach(id=>document.getElementById(id).value = 0);
+  localStorage.removeItem("dovizPortfolioV7");
+  updatePortfolio();
+}
+
 function tick(){
   base.USD = rnd(base.USD,0.0012);
   base.EUR = rnd(base.EUR,0.0012);
@@ -236,11 +378,19 @@ function tick(){
 
   base.GRAM = rnd(base.GRAM,0.0025);
   base.SILVER = rnd(base.SILVER,0.0035);
+  base.PLATIN = rnd(base.PLATIN,0.003);
+  base.BAKIR = rnd(base.BAKIR,0.003);
+
+  const assets = calcAssets();
 
   usd.textContent = fmt(base.USD);
   eur.textContent = fmt(base.EUR);
   gram.textContent = fmt(base.GRAM);
   silver.textContent = fmt(base.SILVER);
+  ata.textContent = fmt(assets.ata);
+  cumhuriyet.textContent = fmt(assets.cum);
+  platin.textContent = fmt(base.PLATIN);
+  bakir.textContent = fmt(base.BAKIR);
 
   const rows = [
     ["USD",base.USD],
@@ -251,9 +401,13 @@ function tick(){
     ["JPY",base.JPY],
     ["GAU/TRY Gram Altın",base.GRAM],
     ["XAGg/TRY Gram Gümüş",base.SILVER],
-    ["Çeyrek Altın",base.GRAM*1.635],
-    ["Yarım Altın",base.GRAM*3.27],
-    ["Tam Altın",base.GRAM*6.54]
+    ["Ata Lira",assets.ata],
+    ["Cumhuriyet Altını",assets.cum],
+    ["Çeyrek Altın",assets.ceyrek],
+    ["Yarım Altın",assets.yarim],
+    ["Tam Altın",assets.tam],
+    ["Platin Gram",base.PLATIN],
+    ["Bakır KG",base.BAKIR]
   ];
 
   marketTable.innerHTML = rows.map(x=>{
@@ -289,9 +443,19 @@ function tick(){
   }).join("");
 
   tapeText.textContent =
-    `USDTRY ${fmt(base.USD)}  •  EURTRY ${fmt(base.EUR)}  •  GBPTRY ${fmt(base.GBP)}  •  GAU/TRY GRAM ALTIN ${fmt(base.GRAM)}  •  XAGg/TRY GRAM GÜMÜŞ ${fmt(base.SILVER)}  •  ÇEYREK ALTIN ${fmt(base.GRAM*1.635)}  •  CANLI TERMİNAL`;
+    `USDTRY ${fmt(base.USD)}  •  EURTRY ${fmt(base.EUR)}  •  GRAM ALTIN ${fmt(base.GRAM)}  •  GRAM GÜMÜŞ ${fmt(base.SILVER)}  •  ATA LİRA ${fmt(assets.ata)}  •  CUMHURİYET ALTINI ${fmt(assets.cum)}  •  PLATİN ${fmt(base.PLATIN)}  •  BAKIR KG ${fmt(base.BAKIR)}  •  PORTFÖY ${portfolioTotal.textContent}`;
+
+  updatePortfolio();
 }
 
+portfolioInputs.forEach(id=>{
+  setTimeout(()=>{
+    const el = document.getElementById(id);
+    if(el) el.addEventListener("input",updatePortfolio);
+  },300);
+});
+
+loadPortfolio();
 getReferenceRates().then(tick);
 setInterval(tick,1500);
 setInterval(getReferenceRates,60000);
