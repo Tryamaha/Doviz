@@ -1,90 +1,112 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>Döviz TL Pro Ultra V2</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Döviz TL Pro Ultra V3</title>
 <style>
 :root{
-  --bg:#060816;--card:#171927;--card2:#101420;--text:#fff;
-  --muted:#a7adbd;--blue:#38bdf8;--green:#22c55e;
-  --red:#ef4444;--gold:#fbbf24;--border:rgba(255,255,255,.13)
+  --bg:#05070f;--card:#111827;--card2:#0b1220;--text:#fff;
+  --muted:#9ca3af;--green:#22c55e;--red:#ef4444;--gold:#fbbf24;
+  --blue:#38bdf8;--border:rgba(255,255,255,.14)
 }
 *{box-sizing:border-box}
 body{
-  margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-  background:radial-gradient(circle at top,#2b2d44,#060816 55%);
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  background:radial-gradient(circle at top,#1e293b,#05070f 55%);
   color:var(--text)
 }
-.app{max-width:1100px;margin:auto;padding:22px}
-h1{font-size:36px;margin:0 0 8px}
-p{color:var(--muted);margin:0 0 18px}
-.top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.badge{padding:12px 16px;border:1px solid var(--border);border-radius:999px;color:var(--muted)}
+.app{max-width:1150px;margin:auto;padding:22px}
+h1{font-size:34px;margin:0}
+p{color:var(--muted);margin:8px 0 18px}
+.header{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.live{
+  padding:10px 16px;border-radius:999px;border:1px solid var(--border);
+  background:#07111f;color:var(--green);font-weight:800
+}
+.live.off{color:var(--red)}
 .controls{display:flex;gap:12px;flex-wrap:wrap;margin:22px 0}
 button,input,select{
-  border:1px solid var(--border);border-radius:18px;padding:15px 18px;
-  font-size:16px;background:#0b1220;color:white
+  border:1px solid var(--border);border-radius:16px;padding:14px 16px;
+  background:#07111f;color:#fff;font-size:16px
 }
-button{background:linear-gradient(135deg,#38bdf8,#2563eb);font-weight:800}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+button{background:linear-gradient(135deg,#0ea5e9,#2563eb);font-weight:900}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 .card{
-  background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03));
-  border:1px solid var(--border);border-radius:28px;padding:22px;
-  box-shadow:0 16px 45px rgba(0,0,0,.3)
+  background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.025));
+  border:1px solid var(--border);border-radius:26px;padding:20px;
+  box-shadow:0 18px 40px rgba(0,0,0,.35)
 }
-.card h2{margin:0 0 16px;font-size:20px}
-.price{font-size:38px;font-weight:900}
-.blue{color:var(--blue)}.gold{color:var(--gold)}.green{color:var(--green)}.red{color:var(--red)}
-.big{grid-column:span 2}.full{grid-column:1/-1}
+.card h2{margin:0 0 14px;font-size:20px}
+.price{font-size:36px;font-weight:950;letter-spacing:-1px}
+.buy{color:var(--green)}
+.sell{color:var(--red)}
+.gold{color:var(--gold)}
+.blue{color:var(--blue)}
+.sub{color:var(--muted);font-size:13px}
+.full{grid-column:1/-1}.big{grid-column:span 2}
 table{width:100%;border-collapse:collapse}
-th,td{padding:14px;border-bottom:1px solid rgba(255,255,255,.09);text-align:left}
-th{color:var(--muted);font-size:13px}
-.sub{color:var(--muted);font-size:14px}
-.status{color:var(--muted);margin-top:12px;font-size:13px}
-.warn{color:#fbbf24}
+th,td{padding:14px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left}
+th{color:var(--muted);font-size:12px}
+.flash-up{animation:flashUp .8s ease}
+.flash-down{animation:flashDown .8s ease}
+.blink{animation:blink 1.2s infinite}
+@keyframes flashUp{0%{background:#064e3b}100%{background:transparent}}
+@keyframes flashDown{0%{background:#7f1d1d}100%{background:transparent}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.45}}
+.ticker{
+  overflow:hidden;white-space:nowrap;border:1px solid var(--border);
+  border-radius:18px;background:#07111f;margin:18px 0
+}
+.ticker span{
+  display:inline-block;padding:14px 0;animation:move 28s linear infinite
+}
+@keyframes move{from{transform:translateX(100%)}to{transform:translateX(-100%)}}
 @media(max-width:850px){
-  .grid{grid-template-columns:1fr}.big{grid-column:span 1}
-  h1{font-size:31px}.price{font-size:34px}
+  .grid{grid-template-columns:1fr}
+  .big{grid-column:span 1}
 }
 </style>
 </head>
 <body>
 <div class="app">
-
-  <div class="top">
+  <div class="header">
     <div>
-      <h1>💱 Döviz TL Pro Ultra V2</h1>
-      <p>Canlı döviz, değerli metaller, çevirici ve banka karşılaştırma paneli</p>
+      <h1>💱 Döviz TL Pro Ultra V3</h1>
+      <p>Gerçek döviz ekranı • alış/satış • canlı veri • hareketli panel</p>
     </div>
-    <div class="badge" id="lastUpdate">Yükleniyor...</div>
+    <div id="liveBadge" class="live blink">CANLI VERİ ALINIYOR</div>
   </div>
+
+  <div class="ticker"><span id="tickerText">Veriler yükleniyor...</span></div>
 
   <div class="controls">
     <button onclick="loadData()">🔄 Yenile</button>
-    <input id="search" placeholder="Döviz / altın ara..." oninput="renderTables()" />
+    <input id="search" placeholder="Döviz / altın ara..." oninput="renderTables()">
   </div>
 
   <div class="grid">
-    <div class="card"><h2>🇺🇸 USD / TL</h2><div class="price blue" id="usd">--</div><div class="sub">Satış</div></div>
-    <div class="card"><h2>🇪🇺 EUR / TL</h2><div class="price blue" id="eur">--</div><div class="sub">Satış</div></div>
-    <div class="card"><h2>🥇 Gram Altın</h2><div class="price gold" id="gram">--</div><div class="sub">Satış</div></div>
-    <div class="card"><h2>⚪ Gümüş</h2><div class="price" id="gumus">--</div><div class="sub">Satış</div></div>
+    <div class="card"><h2>🇺🇸 USD / TL</h2><div id="usd" class="price blue">--</div><div class="sub">Satış</div></div>
+    <div class="card"><h2>🇪🇺 EUR / TL</h2><div id="eur" class="price blue">--</div><div class="sub">Satış</div></div>
+    <div class="card"><h2>🥇 Gram Altın</h2><div id="gram" class="price gold">--</div><div class="sub">Satış</div></div>
+    <div class="card"><h2>⚪ Gümüş</h2><div id="gumus" class="price">--</div><div class="sub">Satış</div></div>
 
     <div class="card big">
       <h2>📊 Döviz Çevirici</h2>
       <div class="controls">
-        <input id="amount" type="number" value="100" oninput="convert()" />
+        <input id="amount" type="number" value="100" oninput="convert()">
         <select id="from" onchange="convert()"></select>
         <select id="to" onchange="convert()"></select>
       </div>
-      <div class="price" id="result">--</div>
-      <div class="status">Satış fiyatına göre yaklaşık hesaplama.</div>
+      <div id="result" class="price">--</div>
     </div>
 
     <div class="card big">
-      <h2>🚨 Durum</h2>
-      <div id="apiStatus" class="status warn">Canlı veri kontrol ediliyor...</div>
+      <h2>📡 Sistem Durumu</h2>
+      <div id="status" class="sub">Canlı veri kontrol ediliyor...</div>
+      <br>
+      <div id="time" class="price blue">--</div>
     </div>
 
     <div class="card full">
@@ -102,20 +124,12 @@ th{color:var(--muted);font-size:13px}
         <tbody id="metalTable"></tbody>
       </table>
     </div>
-
-    <div class="card full">
-      <h2>🏦 Banka Karşılaştırma</h2>
-      <table>
-        <thead><tr><th>Banka</th><th>USD Alış</th><th>USD Satış</th><th>EUR Alış</th><th>EUR Satış</th></tr></thead>
-        <tbody id="bankTable"></tbody>
-      </table>
-      <div class="status">Banka değerleri canlı piyasa fiyatına göre yaklaşık spread ile hesaplanır.</div>
-    </div>
   </div>
 </div>
 
 <script>
 let market = {};
+let previous = {};
 
 const names = {
   USD:"Amerikan Doları", EUR:"Euro", GBP:"Sterlin", CHF:"İsviçre Frangı",
@@ -123,168 +137,165 @@ const names = {
   C:"Çeyrek Altın", Y:"Yarım Altın", T:"Tam Altın", GUMUS:"Gümüş"
 };
 
-const currencyKeys = ["USD","EUR","GBP","CHF","SAR","JPY"];
-const metalKeys = ["GA","C","Y","T","GUMUS"];
+const currencyKeys=["USD","EUR","GBP","CHF","SAR","JPY"];
+const metalKeys=["GA","C","Y","T","GUMUS"];
 
 function num(v){
-  if(v === undefined || v === null) return 0;
-  if(typeof v === "number") return v;
-  return Number(String(v).replace("%","").replace(/\./g,"").replace(",",".").trim()) || 0;
+  if(v==null)return 0;
+  if(typeof v==="number")return v;
+  return Number(String(v).replace("%","").replace(/\./g,"").replace(",",".").trim())||0;
 }
 
 function money(v){
-  if(!v) return "--";
-  return v.toLocaleString("tr-TR",{minimumFractionDigits:2,maximumFractionDigits:2}) + " TL";
+  if(!v)return "--";
+  return v.toLocaleString("tr-TR",{minimumFractionDigits:2,maximumFractionDigits:2})+" TL";
 }
 
 function normalize(code,item){
-  if(!item) return null;
+  if(!item)return null;
+  const buy=num(item.alis||item.buying||item.ALIS||item.Alis);
+  const sell=num(item.satis||item.selling||item.SATIS||item.Satis);
+  if(!sell)return null;
   return {
     code,
-    name:names[code] || code,
-    buy:num(item.alis || item.buying || item.Alis || item.ALIS),
-    sell:num(item.satis || item.selling || item.Satis || item.SATIS),
-    change:num(item.degisim || item.change || item.DEGISIM)
+    name:names[code]||code,
+    buy,
+    sell,
+    change:num(item.degisim||item.change||item.DEGISIM)
   };
 }
 
 async function loadData(){
-  document.getElementById("apiStatus").textContent = "Canlı veri alınıyor...";
-
-  const urls = [
-    "https://api.genelpara.com/embed/para-birimleri.json?_=" + Date.now(),
-    "https://api.genelpara.com/json/?doviz=USD,EUR,GBP,CHF,SAR,JPY&altin=GA,C,Y,T,GUMUS&_=" + Date.now()
+  const urls=[
+    "https://api.genelpara.com/embed/para-birimleri.json?nocache="+Date.now(),
+    "https://api.genelpara.com/json/?doviz=USD,EUR,GBP,CHF,SAR,JPY&altin=GA,C,Y,T,GUMUS&nocache="+Date.now()
   ];
 
-  let ok = false;
+  let dataOk=false;
 
   for(const url of urls){
     try{
-      const res = await fetch(url,{cache:"no-store"});
-      if(!res.ok) throw new Error("API yanıt vermedi");
-      const data = await res.json();
+      const res=await fetch(url,{cache:"no-store",mode:"cors"});
+      if(!res.ok)throw new Error("API error");
+      const data=await res.json();
+      const next={};
 
-      const next = {};
       [...currencyKeys,...metalKeys].forEach(k=>{
-        const item = normalize(k,data[k]);
-        if(item && item.sell > 0) next[k] = item;
+        const n=normalize(k,data[k]);
+        if(n)next[k]=n;
       });
 
       if(next.USD && next.EUR){
-        market = next;
-        ok = true;
+        previous=market;
+        market=next;
+        dataOk=true;
         break;
       }
     }catch(e){}
   }
 
-  if(!ok){
-    document.getElementById("apiStatus").innerHTML =
-      "⚠️ Canlı API şu an tarayıcıdan veri vermedi. Fiyatlar boş bırakıldı; biraz sonra Yenile deneyin.";
-    market = {};
+  if(dataOk){
+    liveBadge.className="live blink";
+    liveBadge.textContent="CANLI";
+    status.textContent="Canlı veriler başarıyla alındı.";
   }else{
-    document.getElementById("apiStatus").innerHTML = "✅ Canlı veriler başarıyla alındı.";
+    liveBadge.className="live off blink";
+    liveBadge.textContent="API HATASI";
+    status.textContent="Veri sağlayıcı tarayıcıdan yanıt vermedi. Eski/sahte fiyat gösterilmiyor.";
+    market={};
   }
 
   renderAll();
-  document.getElementById("lastUpdate").textContent =
-    "Son güncelleme: " + new Date().toLocaleString("tr-TR");
 }
 
 function renderAll(){
-  document.getElementById("usd").textContent = money(market.USD?.sell);
-  document.getElementById("eur").textContent = money(market.EUR?.sell);
-  document.getElementById("gram").textContent = money(market.GA?.sell);
-  document.getElementById("gumus").textContent = money(market.GUMUS?.sell);
+  setPrice("usd",market.USD);
+  setPrice("eur",market.EUR);
+  setPrice("gram",market.GA);
+  setPrice("gumus",market.GUMUS);
+
   renderTables();
   renderSelects();
-  renderBanks();
+  renderTicker();
   convert();
+
+  time.textContent=new Date().toLocaleTimeString("tr-TR");
+}
+
+function setPrice(id,item){
+  const el=document.getElementById(id);
+  if(!item){el.textContent="--";return;}
+  el.textContent=money(item.sell);
+
+  const old=previous[item.code]?.sell;
+  el.classList.remove("flash-up","flash-down");
+  void el.offsetWidth;
+  if(old && item.sell>old)el.classList.add("flash-up");
+  if(old && item.sell<old)el.classList.add("flash-down");
 }
 
 function row(item){
-  if(!item) return "";
-  const cls = item.change >= 0 ? "green" : "red";
-  const sign = item.change >= 0 ? "▲" : "▼";
+  const old=previous[item.code]?.sell;
+  const flash=old ? item.sell>old ? "flash-up" : item.sell<old ? "flash-down" : "" : "";
+  const cls=item.change>=0?"buy":"sell";
+  const sign=item.change>=0?"▲":"▼";
   return `
-  <tr>
+  <tr class="${flash}">
     <td><b>${item.code}</b><div class="sub">${item.name}</div></td>
-    <td class="green">${money(item.buy)}</td>
-    <td class="red">${money(item.sell)}</td>
+    <td class="buy">${money(item.buy)}</td>
+    <td class="sell">${money(item.sell)}</td>
     <td class="${cls}">${sign} ${Math.abs(item.change).toFixed(2)}%</td>
   </tr>`;
 }
 
 function renderTables(){
-  const q = document.getElementById("search").value.toLowerCase();
-  document.getElementById("currencyTable").innerHTML =
-    currencyKeys.filter(k=>market[k] && (!q || k.toLowerCase().includes(q) || market[k].name.toLowerCase().includes(q))).map(k=>row(market[k])).join("");
+  const q=search.value.toLowerCase();
+  currencyTable.innerHTML=currencyKeys
+    .filter(k=>market[k]&&(!q||k.toLowerCase().includes(q)||market[k].name.toLowerCase().includes(q)))
+    .map(k=>row(market[k])).join("");
 
-  document.getElementById("metalTable").innerHTML =
-    metalKeys.filter(k=>market[k] && (!q || k.toLowerCase().includes(q) || market[k].name.toLowerCase().includes(q))).map(k=>row(market[k])).join("");
+  metalTable.innerHTML=metalKeys
+    .filter(k=>market[k]&&(!q||k.toLowerCase().includes(q)||market[k].name.toLowerCase().includes(q)))
+    .map(k=>row(market[k])).join("");
 }
 
 function renderSelects(){
-  const options = `<option value="TRY">TRY - Türk Lirası</option>` +
+  const opts='<option value="TRY">TRY - Türk Lirası</option>'+
     Object.keys(market).map(k=>`<option value="${k}">${k} - ${market[k].name}</option>`).join("");
 
   ["from","to"].forEach(id=>{
-    const old = document.getElementById(id).value;
-    document.getElementById(id).innerHTML = options;
-    if(old) document.getElementById(id).value = old;
+    const el=document.getElementById(id);
+    const old=el.value;
+    el.innerHTML=opts;
+    if(old)el.value=old;
   });
 
-  if(!document.getElementById("from").value) document.getElementById("from").value = "USD";
-  if(!document.getElementById("to").value) document.getElementById("to").value = "TRY";
+  if(!from.value)from.value="USD";
+  if(!to.value)to.value="TRY";
 }
 
 function rate(k){
-  if(k === "TRY") return 1;
-  return market[k]?.sell || 0;
+  if(k==="TRY")return 1;
+  return market[k]?.sell||0;
 }
 
 function convert(){
-  const amount = Number(document.getElementById("amount").value || 0);
-  const from = document.getElementById("from").value;
-  const to = document.getElementById("to").value;
-
-  if(!rate(from) || !rate(to)){
-    document.getElementById("result").textContent = "--";
-    return;
-  }
-
-  const value = amount * rate(from) / rate(to);
-  document.getElementById("result").textContent =
-    value.toLocaleString("tr-TR",{maximumFractionDigits:4}) + " " + to;
+  if(!from.value||!to.value){result.textContent="--";return;}
+  const a=Number(amount.value||0);
+  if(!rate(from.value)||!rate(to.value)){result.textContent="--";return;}
+  result.textContent=(a*rate(from.value)/rate(to.value)).toLocaleString("tr-TR",{maximumFractionDigits:4})+" "+to.value;
 }
 
-function renderBanks(){
-  const usd = market.USD?.sell || 0;
-  const eur = market.EUR?.sell || 0;
-
-  const banks = [
-    ["Ziraat Bankası",-.35,.35],
-    ["İş Bankası",-.32,.38],
-    ["Garanti BBVA",-.40,.45],
-    ["Akbank",-.36,.42],
-    ["Yapı Kredi",-.34,.44]
-  ];
-
-  document.getElementById("bankTable").innerHTML = banks.map(b=>{
-    const name=b[0], buySpread=b[1], sellSpread=b[2];
-    return `
-    <tr>
-      <td><b>${name}</b></td>
-      <td class="green">${usd ? money(usd+buySpread) : "--"}</td>
-      <td class="red">${usd ? money(usd+sellSpread) : "--"}</td>
-      <td class="green">${eur ? money(eur+buySpread) : "--"}</td>
-      <td class="red">${eur ? money(eur+sellSpread) : "--"}</td>
-    </tr>`;
-  }).join("");
+function renderTicker(){
+  const text=[...currencyKeys,...metalKeys]
+    .filter(k=>market[k])
+    .map(k=>`${k}: ${money(market[k].sell)} ${market[k].change>=0?"▲":"▼"}`)
+    .join("     •     ");
+  tickerText.textContent=text||"Canlı veri alınamadı.";
 }
 
 loadData();
-setInterval(loadData,60000);
+setInterval(loadData,30000);
 </script>
 </body>
 </html>
